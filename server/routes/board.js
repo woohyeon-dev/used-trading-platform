@@ -19,15 +19,16 @@ router.route('/').get(async (req, res, next) => {
       order: [['post_id', 'desc']],
     });
     const result = [];
-    for (const board of boards) {
+    for (const b of boards) {
       result.push({
-        post_id: board.post_id,
-        descript: board.descript,
-        regdate: board.regdate,
-        title: board.title,
-        views: board.views,
-        recommends: board.recommends,
-        nickname: board.User.nickname,
+        post_id: b.post_id,
+        descript: b.descript,
+        regdate: b.regdate,
+        title: b.title,
+        views: b.views,
+        recommends: b.recommends,
+        cat_id: b.cat_id,
+        nickname: b.User.nickname,
       });
     }
     res.json(result);

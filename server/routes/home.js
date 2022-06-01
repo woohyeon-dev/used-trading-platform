@@ -4,7 +4,7 @@ const { Board, Product, User } = require('../models/index');
 const router = express.Router();
 
 // 자유게시판 게시물 DB 정보
-router.route('/api/po').get(async (req, res, next) => {
+router.route('/api/board').get(async (req, res, next) => {
   try {
     const boards = await Board.findAll({
       attributes: {
@@ -20,15 +20,15 @@ router.route('/api/po').get(async (req, res, next) => {
       limit: 7,
     });
     const result = [];
-    for (const board of boards) {
+    for (const b of boards) {
       result.push({
-        post_id: board.post_id,
-        descript: board.descript,
-        regdate: board.regdate,
-        title: board.title,
-        views: board.views,
-        recommends: board.recommends,
-        nickname: board.User.nickname,
+        post_id: b.post_id,
+        descript: b.descript,
+        regdate: b.regdate,
+        title: b.title,
+        views: b.views,
+        recommends: b.recommends,
+        nickname: b.User.nickname,
       });
     }
     res.json(result);
@@ -39,7 +39,7 @@ router.route('/api/po').get(async (req, res, next) => {
 });
 
 // 중고마켓 게시물 DB 정보
-router.route('/api/pr').get(async (req, res, next) => {
+router.route('/api/product').get(async (req, res, next) => {
   try {
     const products = await Product.findAll({
       attributes: {
@@ -55,16 +55,16 @@ router.route('/api/pr').get(async (req, res, next) => {
       limit: 10,
     });
     const result = [];
-    for (const product of products) {
+    for (const p of products) {
       result.push({
-        p_id: product.p_id,
-        descript: product.descript,
-        price: product.price,
-        regdate: product.regdate,
-        image: product.image,
-        title: product.title,
-        nickname: product.User.nickname,
-        cat_id: product.cat_id,
+        p_id: p.p_id,
+        descript: p.descript,
+        price: p.price,
+        regdate: p.regdate,
+        image: p.image,
+        title: p.title,
+        nickname: p.User.nickname,
+        cat_id: p.cat_id,
       });
     }
     res.json(result);

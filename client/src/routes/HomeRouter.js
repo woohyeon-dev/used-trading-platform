@@ -10,6 +10,7 @@ import {
   WriteProdPost,
   Post,
   Product,
+  CategoryList,
 } from '../pages';
 import { Layout, Header, Footer, Navigation } from '../components';
 
@@ -24,9 +25,10 @@ function HomeRouter({ isLogin }) {
         {/* Group page */}
         <Route path='group' element={<Group />} />
         {/* Market page */}
-        <Route path='market' element={<Market />} />
+        <Route path='market/categories' element={<Market />} />
+        <Route path='market/categories/:cat_id' element={<Market />} />
         {/* Product Page */}
-        <Route path='market/:p_id' element={<Product />} />
+        <Route path='market/product/:p_id' element={<Product />} />
         {/* WriteProdPost Page */}
         <Route path='market/write' element={<WriteProdPost />} />
         {/* Board Page */}

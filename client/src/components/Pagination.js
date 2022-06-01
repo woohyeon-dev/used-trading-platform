@@ -62,17 +62,18 @@ function Pagination({ pagePer, totalPostCnt, currentPage, toggleCurrentPage }) {
       >
         &lt;
       </div>
-      {pageArr[currentGroup].map(num => (
-        <div
-          key={num}
-          className={`pageButton`}
-          onClick={() => {
-            toggleCurrentPage(num);
-          }}
-        >
-          {num}
-        </div>
-      ))}
+      {pageArr.length > 0 &&
+        pageArr[currentGroup].map(num => (
+          <div
+            key={num}
+            className={`pageButton`}
+            onClick={() => {
+              toggleCurrentPage(num);
+            }}
+          >
+            {num}
+          </div>
+        ))}
       <div
         className='pageButton angleBracket'
         onClick={() => {

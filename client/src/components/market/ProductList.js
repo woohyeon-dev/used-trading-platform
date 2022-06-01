@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 const ProductListBlk = styled.div`
-  width: 954px;
   height: auto;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 15px;
@@ -91,20 +89,24 @@ function timeForToday(value) {
 function ProductList({ prods }) {
   return (
     <ProductListBlk>
-      {prods.map((prod, index) => (
-        <ProductBox prod={prod} key={index}>
-          <div className='imageBox'></div>
-          <div className='postInfo'>
-            <div className='prodTitle'>
-              <NavLink to={`/market/${prod.p_id}`} className='prodTitle'>
-                {prod.title}
-              </NavLink>
+      {prods.length > 0 &&
+        prods.map((prod, index) => (
+          <ProductBox key={index}>
+            <div className='imageBox'></div>
+            <div className='postInfo'>
+              <div className='prodTitle'>
+                <NavLink
+                  to={`/market/product/${prod.p_id}`}
+                  className='prodTitle'
+                >
+                  {prod.title}
+                </NavLink>
+              </div>
+              <div className='prodPrice'>{prod.price}</div>
+              <div className='betweenTime'>{timeForToday(prod.regdate)}</div>
             </div>
-            <div className='prodPrice'>{prod.price}</div>
-            <div className='betweenTime'>{timeForToday(prod.regdate)}</div>
-          </div>
-        </ProductBox>
-      ))}
+          </ProductBox>
+        ))}
     </ProductListBlk>
   );
 }

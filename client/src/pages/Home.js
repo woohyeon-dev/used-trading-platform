@@ -44,8 +44,8 @@ function Home() {
 
   useEffect(() => {
     const callApi = async () => {
-      const res1 = await axios.get('http://localhost:5000/api/po');
-      const res2 = await axios.get('http://localhost:5000/api/pr');
+      const res1 = await axios.get('http://localhost:5000/api/board');
+      const res2 = await axios.get('http://localhost:5000/api/product');
       setRecentPosts(res1.data);
       setRecentProds(res2.data);
     };
@@ -58,7 +58,7 @@ function Home() {
         현지학기제 광고
       </NavLink>
       <div className='homeContent'>
-        <NavLink to='/market' className='title'>
+        <NavLink to='/market/categories' className='title'>
           최근 등록 상품
         </NavLink>
         <div className='titleBox'>

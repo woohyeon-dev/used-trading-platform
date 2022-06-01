@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import Pagination from './Pagination';
 import BoardHeader from './board/BoardHeader';
 import BoardList from './board/BoardList';
+import Category from './market/Category';
 import ProductList from './market/ProductList';
 
 export {
@@ -17,5 +18,6 @@ export {
   BoardHeader,
   BoardList,
   Pagination,
+  Category,
   ProductList,
 };
