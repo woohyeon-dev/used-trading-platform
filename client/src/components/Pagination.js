@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const PaginationBlk = styled.div`
   width: 984px;
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
 
