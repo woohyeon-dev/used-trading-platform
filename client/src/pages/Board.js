@@ -11,7 +11,7 @@ function Board() {
   // 페이지당 보여줄 게시물 수
   const pagePer = 20;
   // const pagePer = 1;
-  const [posts, setPosts] = useState([{}]);
+  const [posts, setPosts] = useState([]);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(pagePer);
   const [currentPage, setCurrentPage] = useState(1);

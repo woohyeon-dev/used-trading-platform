@@ -12,7 +12,7 @@ const MarketBlock = styled.div`
 function Market() {
   const pagePer = 20;
   // const pagePer = 1;
-  const [prods, setProds] = useState([{}]);
+  const [prods, setProds] = useState([]);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(pagePer);
   const [currentPage, setCurrentPage] = useState(1);
