@@ -45,22 +45,23 @@ function BoardList({ posts }) {
           </tr>
         </thead>
         <tbody>
-          {posts.map((post, index) => (
-            <tr key={index}>
-              <td style={{ width: '10%' }}>{post.post_id}</td>
-              <td style={{ width: '40%' }}>
-                <NavLink to={`/board/${post.post_id}`} className='postTitle'>
-                  {post.title}
-                </NavLink>
-              </td>
-              <td style={{ width: '15%' }}>{post.nickname}</td>
-              <td style={{ width: '15%' }}>
-                {('' + post.regdate).slice(0, 10)}
-              </td>
-              <td style={{ width: '10%' }}>{post.views}</td>
-              <td style={{ width: '10%' }}>{post.recommends}</td>
-            </tr>
-          ))}
+          {posts.length > 0 &&
+            posts.map((post, index) => (
+              <tr key={index}>
+                <td style={{ width: '10%' }}>{post.post_id}</td>
+                <td style={{ width: '40%' }}>
+                  <NavLink to={`/board/${post.post_id}`} className='postTitle'>
+                    {post.title}
+                  </NavLink>
+                </td>
+                <td style={{ width: '15%' }}>{post.nickname}</td>
+                <td style={{ width: '15%' }}>
+                  {('' + post.regdate).slice(0, 10)}
+                </td>
+                <td style={{ width: '10%' }}>{post.views}</td>
+                <td style={{ width: '10%' }}>{post.recommends}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </BoardListBlk>
