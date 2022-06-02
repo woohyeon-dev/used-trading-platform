@@ -36,11 +36,15 @@ const ProductBox = styled.div`
   }
 
   .prodTitle {
+    width: 147.8px;
     height: 26px;
     grid-column: 1 / span 2;
     margin: 0;
     line-height: 26px;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .prodPrice {
     height: 26px;
