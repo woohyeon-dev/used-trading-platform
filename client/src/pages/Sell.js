@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const WriteProdPostBlk = styled.div``;
+const SellBlock = styled.div``;
 
-function WriteProdPost() {
+function Sell() {
   return (
-    <WriteProdPostBlk>
+    <SellBlock>
       <div>판매 게시물 작성 페이지 구현해야함.</div>
-    </WriteProdPostBlk>
+    </SellBlock>
   );
 }
 
-export default WriteProdPost;
+export default Sell;

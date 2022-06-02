@@ -7,7 +7,7 @@ import {
   Board,
   MyPage,
   WritePost,
-  WriteProdPost,
+  Sell,
   Post,
   Product,
 } from '../pages';
@@ -24,12 +24,12 @@ function HomeRouter({ isLogin }) {
         {/* Group page */}
         <Route path='group' element={<Group />} />
         {/* Market page */}
-        <Route path='market/categories' element={<Market />} />
+        <Route path='market' element={<Market />} />
         <Route path='market/categories/:cat_id' element={<Market />} />
         {/* Product Page */}
         <Route path='market/product/:p_id' element={<Product />} />
         {/* WriteProdPost Page */}
-        <Route path='market/write' element={<WriteProdPost />} />
+        <Route path='/market/sell' element={<Sell />} />
         {/* Board Page */}
         <Route path='board' element={<Board />} />
         {/* Post Page */}

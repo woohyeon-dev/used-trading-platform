@@ -44,7 +44,7 @@ function Navigation() {
       <NavLink to='/group' className='navButtons'>
         조원소개
       </NavLink>
-      <NavLink to='/market/categories' className='navButtons'>
+      <NavLink to='/market' className='navButtons'>
         중고장터
       </NavLink>
       <NavLink to='/board' className='navButtons'>

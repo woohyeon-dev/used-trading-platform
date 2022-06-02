@@ -37,25 +37,20 @@ const HeaderBtnBlock = styled.div`
 function HeaderBtn({ isLogin }) {
   return (
     <HeaderBtnBlock>
-      {isLogin ? (
-        <div className='profile'>
-          <NavLink to='/' className='profileButtons'>
-            로그아웃
-          </NavLink>
+      <div className='profile'>
+        {isLogin ? (
           <NavLink to='/mypage' className='profileButtons'>
             마이페이지
           </NavLink>
-        </div>
-      ) : (
-        <div className='profile'>
-          <NavLink to='/signin' className='profileButtons'>
+        ) : (
+          <NavLink to='/login' className='profileButtons'>
             로그인
           </NavLink>
-          <NavLink to='/signup' className='profileButtons'>
-            회원가입
-          </NavLink>
-        </div>
-      )}
+        )}
+        <NavLink to='/market/sell' className='profileButtons'>
+          판매하기
+        </NavLink>
+      </div>
     </HeaderBtnBlock>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
-import { SignUp, SignIn, Semester, Error } from './pages';
+import { Login, Semester, Error } from './pages';
 import HomeRouter from './routes/HomeRouter';
 
 const GlobalStyle = createGlobalStyle`
@@ -54,10 +54,8 @@ function App() {
       <Routes>
         {/* Home Page */}
         <Route path='/*' element={<HomeRouter isLogin={isLogin} />} />
-        {/* SignIn Page */}
-        <Route path='/signin' element={<SignIn />} />
-        {/* SignUp Page */}
-        <Route path='/signup' element={<SignUp />} />
+        {/* Login Page */}
+        <Route path='/login' element={<Login />} />
         {/* Semester Page */}
         <Route path='/lss' element={<Semester />} />
         {/* Error Page */}

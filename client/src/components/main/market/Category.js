@@ -42,7 +42,7 @@ function Category() {
 
   return (
     <CategoryBlock>
-      <NavLink to='/market/categories' key={0} className='categoryBtn'>
+      <NavLink to='/market' key={0} className='categoryBtn'>
         {'전체보기'}
       </NavLink>
       {categories.map((category, index) => (
