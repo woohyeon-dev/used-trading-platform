@@ -10,7 +10,6 @@ import {
   WriteProdPost,
   Post,
   Product,
-  CategoryList,
 } from '../pages';
 import { Layout, Header, Footer, Navigation } from '../components';
 

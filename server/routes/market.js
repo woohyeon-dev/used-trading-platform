@@ -3,8 +3,6 @@ const { Product, User, Category } = require('../models/index');
 
 const router = express.Router();
 
-const catId = 0;
-
 router.route('/product').get(async (req, res, next) => {
   try {
     console.log(req.query.cat_id);
