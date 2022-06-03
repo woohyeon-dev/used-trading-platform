@@ -38,7 +38,7 @@ const BoardHeaderBlk = styled.div`
     }
   }
 
-  .writeBtn {
+  .boardWriteBtn {
     text-decoration: none;
     color: black;
   }
@@ -64,8 +64,8 @@ function BoardHeader() {
         <div className='listBtn boardBtn' onClick={handleListBtn}>
           목록
         </div>
-        <div className='writeBtn boardBtn'>
-          <NavLink to='/board/write' className='writeBtn'>
+        <div className='boardBtn'>
+          <NavLink to='/board/write' className='boardWriteBtn'>
             쓰기
           </NavLink>
         </div>

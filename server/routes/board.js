@@ -27,7 +27,6 @@ router.route('/').get(async (req, res, next) => {
         title: b.title,
         views: b.views,
         recommends: b.recommends,
-        cat_id: b.cat_id,
         nickname: b.User.nickname,
       });
     }
@@ -35,6 +34,14 @@ router.route('/').get(async (req, res, next) => {
   } catch (err) {
     console.error(err);
     next(err);
+  }
+});
+
+router.route('/write').post(async (req, res, next) => {
+  try {
+    console.log(req.body);
+  } catch (error) {
+    console.error(err);
   }
 });
 
