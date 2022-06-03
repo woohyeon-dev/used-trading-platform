@@ -10,6 +10,11 @@ module.exports = class User extends Sequelize.Model {
           allowNull: false,
           primaryKey: true,
         },
+        user_id: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
+          primaryKey: true,
+        },
         nickname: {
           type: Sequelize.STRING(8),
           allowNull: false,
@@ -51,7 +56,10 @@ module.exports = class User extends Sequelize.Model {
 
   static associate(db) {
     db.User.hasMany(db.Board, { foreignKey: 'writer', sourceKey: 'id' });
-    db.User.hasMany(db.Board_reply, { foreignKey: 'writer', sourceKey: 'id' });
+    db.User.hasMany(db.Board_reply, {
+      foreignKey: 'writer',
+      sourceKey: 'id',
+    });
     db.User.hasMany(db.Product, { foreignKey: 'writer', sourceKey: 'id' });
     db.User.hasMany(db.Product_reply, {
       foreignKey: 'writer',

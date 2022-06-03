@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
@@ -87,9 +87,9 @@ function WritePost() {
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
+
   const handleSubmit = e => {
     e.preventDefault();
-
     try {
       const callApi = async () => {
         const res = await axios.post(
@@ -109,7 +109,6 @@ function WritePost() {
         <div>
           <input
             type='text'
-            id='title_txt'
             name='title'
             value={title}
             onChange={handleInputs}
@@ -118,7 +117,6 @@ function WritePost() {
         </div>
         <div>
           <textarea
-            id='content_txt'
             name='content'
             placeholder='내용을 입력하세요'
             value={content}

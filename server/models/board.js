@@ -10,7 +10,7 @@ module.exports = class Board extends Sequelize.Model {
           allowNull: false,
           primaryKey: true,
         },
-        descript: {
+        content: {
           type: Sequelize.STRING(100),
           allowNull: true,
         },

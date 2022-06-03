@@ -4,6 +4,7 @@ import Home from './Home';
 import Market from './Market';
 import Error from './Error';
 import Login from './Login';
+import Register from './Register';
 import MyPage from './MyPage';
 import Semester from './Semester';
 import WritePost from './WritePost';
@@ -18,6 +19,7 @@ export {
   Market,
   Error,
   Login,
+  Register,
   MyPage,
   Semester,
   WritePost,

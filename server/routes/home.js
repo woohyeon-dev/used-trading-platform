@@ -23,7 +23,7 @@ router.route('/api/board').get(async (req, res, next) => {
     for (const b of boards) {
       result.push({
         post_id: b.post_id,
-        descript: b.descript,
+        content: b.content,
         regdate: b.regdate,
         title: b.title,
         views: b.views,

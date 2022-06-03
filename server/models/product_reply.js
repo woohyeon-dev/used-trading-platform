@@ -10,7 +10,7 @@ module.exports = class Product_reply extends Sequelize.Model {
           allowNull: false,
           primaryKey: true,
         },
-        content: {
+        reply_content: {
           type: Sequelize.STRING(100),
           allowNull: true,
         },

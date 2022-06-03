@@ -46,7 +46,10 @@ module.exports = class Product extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Product.belongsTo(db.User, { foreignKey: 'writer', targetKey: 'id' });
+    db.Product.belongsTo(db.User, {
+      foreignKey: 'writer',
+      targetKey: 'id',
+    });
     db.Product.belongsTo(db.Category, {
       foreignKey: 'cat_id',
       targetKey: 'cat_id',

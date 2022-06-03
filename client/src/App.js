@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
-import { Login, Semester, Error } from './pages';
+import { Login, Register, Semester, Error } from './pages';
 import HomeRouter from './routes/HomeRouter';
+import Context from './context/Context';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -48,20 +49,49 @@ function App() {
     }
   }, [isLogin]);
 
+  const ContextProvider = ({ children }) => {
+    const setLoggedUser = data => {
+      setState(prevState => ({
+        ...prevState,
+        loggedUser: data,
+      }));
+    };
+
+    const setLoggedIn = () => {
+      setState(prevState => ({
+        ...prevState,
+        loggedIn: !prevState.loggedIn,
+      }));
+    };
+
+    const initialState = {
+      loggedUser: {},
+      loggedIn: false,
+      setLoggedUser,
+      setLoggedIn,
+    };
+
+    const [state, setState] = useState(initialState);
+
+    return <Context.Provider value={state}>{children}</Context.Provider>;
+  };
+
   return (
-    <>
+    <ContextProvider>
       <GlobalStyle />
       <Routes>
         {/* Home Page */}
         <Route path='/*' element={<HomeRouter isLogin={isLogin} />} />
         {/* Login Page */}
         <Route path='/login' element={<Login />} />
+        {/* Register Page */}
+        <Route path='/register' element={<Register />} />
         {/* Semester Page */}
         <Route path='/lss' element={<Semester />} />
         {/* Error Page */}
         <Route path='/error' element={<Error />} />
       </Routes>
-    </>
+    </ContextProvider>
   );
 }
 
