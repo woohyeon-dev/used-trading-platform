@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: true, // 단 아래 속성 true일 경우는 주소로 적어야한다.(보안강화)
+    origin: 'http://localhost:3000', // 단 아래 속성 true일 경우는 주소로 적어야한다.(보안강화)
     credentials: true, // front, back 간 쿠키 공유
   })
 );
@@ -65,10 +65,10 @@ app.use(
     // name의 기본값 - connect_sid
   })
 );
-// 아래 2개는 session 아래로 적어주자
-app.use(passport.initialize()); // passport 초기화 미들웨어
-// passport.session()이 실행될 때 deserializeUser 실행됨
-app.use(passport.session()); // 앱에서 영구 로그인을 사용한다면 추가하자
+//! express-session에 의존하므로 뒤에 위치해야 함
+app.use(passport.initialize()); // 요청 객체에 passport 설정을 심음
+app.use(passport.session()); // req.session 객체에 passport정보를 추가 저장
+// passport.session()이 실행되면, 세션쿠키 정보를 바탕으로 해서 passport/index.js의 deserializeUser()가 실행하게 한다
 
 // router
 app.use('/', homeRouter);
@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 // error middleware
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.status || 500).send(err.message);
+  res.status(err.status || 500).send(err);
 });
 
 app.listen(app.get('port'), () => {

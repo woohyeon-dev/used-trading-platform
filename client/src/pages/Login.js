@@ -94,23 +94,22 @@ const LoginBlock = styled.div`
 
 function Login() {
   //글로벌 전역 상태값 loggedUser, loggedIn, setLoggedUser, setLoggedIn를 받아옴
-  const { loggedUser, loggedIn, setLoggedUser, setLoggedIn } =
-    useContext(Context);
+  const { setLoggedIn, setLoggedUser } = useContext(Context);
 
   //url 이동을 위한 useNavigate
   const navigate = useNavigate();
 
   //input에서 입력한 아이디와 비밀번호 정보를 담기위한 state
-  const [account, setAccount] = useState({
+  const [loginInfo, setLoginInfo] = useState({
     user_id: '',
     password: '',
   });
 
-  //input에 입력하면 자동적으로 account state값 변경
+  //input에 입력하면 자동적으로 loginInfo state값 변경
   const handleChange = e => {
     const { name, value } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setAccount({
-      ...account,
+    setLoginInfo({
+      ...loginInfo,
       [name]: value, // input에 지정한 네임 속성에 해당 value 값을 넣어 오버라이딩
     });
   };
@@ -118,14 +117,13 @@ function Login() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const user = await axios.post(
+      const login = await axios.post(
         'http://localhost:5000/auth/login',
-        account
+        loginInfo,
+        { withCredentials: true }
       );
-      console.log(user);
-      console.log(user.data);
       setLoggedIn(true);
-      console.log(loggedUser, loggedIn);
+      setLoggedUser(login.data);
       //성공하면 해당 url로 이동
       navigate('/');
     } catch (error) {
@@ -145,7 +143,7 @@ function Login() {
             type='text'
             placeholder='아이디'
             name='user_id'
-            value={account.user_id}
+            value={loginInfo.user_id}
             onChange={handleChange}
           />
           <input
@@ -153,7 +151,7 @@ function Login() {
             type='password'
             placeholder='비밀번호'
             name='password'
-            value={account.password}
+            value={loginInfo.password}
             onChange={handleChange}
           />
           <button className='loginBtn' type='submit'>

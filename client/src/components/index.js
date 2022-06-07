@@ -8,6 +8,8 @@ import BoardHeader from './main/board/BoardHeader';
 import BoardList from './main/board/BoardList';
 import Category from './main/market/Category';
 import ProductList from './main/market/ProductList';
+import NextPageInput from './register/NextPageInput';
+import PrevPageInput from './register/PrevPageInput';
 
 export {
   Layout,
@@ -20,4 +22,6 @@ export {
   Pagination,
   Category,
   ProductList,
+  NextPageInput,
+  PrevPageInput,
 };

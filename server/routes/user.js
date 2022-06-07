@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn } = require('./middlewares');
 
 // 로그인 사용자 정보 가져오기 (계속 로그인 상태를 만들기 위한)
 // GET /user
@@ -26,7 +26,6 @@ router.get('/', isLoggedIn, async (req, res, next) => {
       res.status(200).json(null);
     }
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });

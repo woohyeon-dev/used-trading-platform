@@ -16,7 +16,7 @@ module.exports = () => {
   passport.deserializeUser(async function (user_id, done) {
     // DB에서 정보를 찾으면 req.user로 넣어준다.
     try {
-      const user = User.findOne({ where: { user_id } });
+      const user = await User.findOne({ where: { user_id } });
       done(null, user); // done 시 callback
     } catch (error) {
       done(error);

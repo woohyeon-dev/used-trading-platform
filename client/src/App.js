@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import { Login, Register, Semester, Error } from './pages';
 import HomeRouter from './routes/HomeRouter';
+import axios from 'axios';
 import Context from './context/Context';
 
 const GlobalStyle = createGlobalStyle`
@@ -33,55 +34,34 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  // 로그인 상태 관리
-  const [isLogin, setIsLogin] = useState(false);
-
+  const { loggedIn, setLoggedIn } = useContext(Context);
   useEffect(() => {
-    if (sessionStorage.getItem('user_id') === null) {
-      // sessionStorage 에 user_id 라는 key 값으로 저장된 값이 없다면
-      console.log('isLogin ?? :: ', isLogin);
-      setIsLogin(false);
-    } else {
-      // sessionStorage 에 user_id 라는 key 값으로 저장된 값이 있다면
-      // 로그인 상태 변경
-      console.log('isLogin ?? :: ', isLogin);
-      setIsLogin(true);
+    try {
+      const callApi = async () => {
+        const user = await axios.post(
+          'http://localhost:5000/home/user',
+          {},
+          { withCredentials: true }
+        );
+        if (user.data.user) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+        }
+      };
+
+      callApi();
+    } catch (error) {
+      alert(error);
     }
-  }, [isLogin]);
-
-  const ContextProvider = ({ children }) => {
-    const setLoggedUser = data => {
-      setState(prevState => ({
-        ...prevState,
-        loggedUser: data,
-      }));
-    };
-
-    const setLoggedIn = () => {
-      setState(prevState => ({
-        ...prevState,
-        loggedIn: !prevState.loggedIn,
-      }));
-    };
-
-    const initialState = {
-      loggedUser: {},
-      loggedIn: false,
-      setLoggedUser,
-      setLoggedIn,
-    };
-
-    const [state, setState] = useState(initialState);
-
-    return <Context.Provider value={state}>{children}</Context.Provider>;
-  };
+  }, []);
 
   return (
-    <ContextProvider>
+    <>
       <GlobalStyle />
       <Routes>
         {/* Home Page */}
-        <Route path='/*' element={<HomeRouter isLogin={isLogin} />} />
+        <Route path='/*' element={<HomeRouter />} />
         {/* Login Page */}
         <Route path='/login' element={<Login />} />
         {/* Register Page */}
@@ -91,7 +71,7 @@ function App() {
         {/* Error Page */}
         <Route path='/error' element={<Error />} />
       </Routes>
-    </ContextProvider>
+    </>
   );
 }
 

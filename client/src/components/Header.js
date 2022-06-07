@@ -40,14 +40,14 @@ const HeaderBlock = styled.div`
   }
 `;
 
-function Header({ isLogin }) {
+function Header() {
   return (
     <HeaderBlock>
       <NavLink to='/' className='logo'>
         logo
       </NavLink>
       <input className='search' placeholder='상품명을 입력하세요'></input>
-      <HeaderBtn isLogin={isLogin} />
+      <HeaderBtn />
     </HeaderBlock>
   );
 }

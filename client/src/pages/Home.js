@@ -44,8 +44,8 @@ function Home() {
 
   useEffect(() => {
     const callApi = async () => {
-      const res1 = await axios.get('http://localhost:5000/api/board');
-      const res2 = await axios.get('http://localhost:5000/api/product');
+      const res1 = await axios.get('http://localhost:5000/home/board');
+      const res2 = await axios.get('http://localhost:5000/home/product');
       setRecentPosts(res1.data);
       setRecentProds(res2.data);
     };

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import Context from '../context/Context';
+import axios from 'axios';
 
 const HeaderBtnBlock = styled.div`
   .profile {
@@ -34,14 +36,32 @@ const HeaderBtnBlock = styled.div`
   }
 `;
 
-function HeaderBtn({ isLogin }) {
+function HeaderBtn() {
+  const { loggedIn, setLoggedIn } = useContext(Context);
+
+  const handleLogout = async e => {
+    try {
+      const logout = await axios.post(
+        'http://localhost:5000/auth/logout',
+        {},
+        { withCredentials: true }
+      );
+      alert(logout.data);
+      setLoggedIn(false);
+      //성공하면 해당 url로 이동
+      // navigate('/');
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+
   return (
     <HeaderBtnBlock>
       <div className='profile'>
-        {isLogin ? (
-          <NavLink to='/mypage' className='profileButtons'>
-            마이페이지
-          </NavLink>
+        {loggedIn ? (
+          <div className='profileButtons' onClick={handleLogout}>
+            로그아웃
+          </div>
         ) : (
           <NavLink to='/login' className='profileButtons'>
             로그인

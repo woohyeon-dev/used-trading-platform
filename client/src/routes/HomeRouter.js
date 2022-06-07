@@ -13,10 +13,10 @@ import {
 } from '../pages';
 import { Layout, Header, Footer, Navigation } from '../components';
 
-function HomeRouter({ isLogin }) {
+function HomeRouter() {
   return (
     <Layout>
-      <Header isLogin={isLogin} />
+      <Header />
       <Navigation />
       <Routes>
         {/* Home page */}
