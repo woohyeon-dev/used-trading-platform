@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import Context from '../context/Context';
 import axios from 'axios';
 
@@ -9,14 +9,13 @@ const HeaderBtnBlock = styled.div`
     width: 240px;
     display: flex;
     justify-content: flex-end;
-    // border: 1px solid blue;
   }
 
   .profileButtons {
     width: 100px;
-    height: 40px;
+    height: 45px;
     border: 2px solid black;
-    line-height: 38px;
+    line-height: 43px;
     text-align: center;
     font-weight: bold;
     font-size: 16px;
@@ -25,7 +24,7 @@ const HeaderBtnBlock = styled.div`
 
     /* 버튼 사이의 간격 */
     &:not(:first-child) {
-      margin-left: 20px;
+      margin: 0 20px;
     }
 
     &:hover {
@@ -37,6 +36,8 @@ const HeaderBtnBlock = styled.div`
 `;
 
 function HeaderBtn() {
+  const navigate = useNavigate();
+
   const { loggedIn, setLoggedIn } = useContext(Context);
 
   const handleLogout = async e => {
@@ -48,10 +49,17 @@ function HeaderBtn() {
       );
       alert(logout.data);
       setLoggedIn(false);
-      //성공하면 해당 url로 이동
-      // navigate('/');
     } catch (error) {
       alert(error.response.data);
+    }
+  };
+
+  const handleSellBtn = async e => {
+    if (loggedIn) {
+      navigate('/market/sell');
+    } else {
+      alert('로그인 후 이용가능합니다.');
+      navigate('/login');
     }
   };
 
@@ -67,9 +75,9 @@ function HeaderBtn() {
             로그인
           </NavLink>
         )}
-        <NavLink to='/market/sell' className='profileButtons'>
+        <div className='profileButtons' onClick={handleSellBtn}>
           판매하기
-        </NavLink>
+        </div>
       </div>
     </HeaderBtnBlock>
   );
