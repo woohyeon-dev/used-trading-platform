@@ -76,4 +76,12 @@ router.route('/category').get(async (req, res, next) => {
   }
 });
 
+router.route('/sell').post(async (req, res, next) => {
+  try {
+    console.log(req.body);
+  } catch (error) {
+    console.error(err);
+  }
+});
+
 module.exports = router;
