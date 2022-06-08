@@ -1,47 +1,90 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Context from '../context/Context';
 
 const WritePostBlock = styled.div`
   width: 984px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 30px 0 60px 0;
-  background-color: #dfdfde;
+  padding: 50px 0 60px 0;
+  background-color: #f8f9fa;
 
   form {
     margin: 0 auto;
   }
 
+  .pageTitle {
+    font-size: 33px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 2px solid black;
+  }
+
+  .inputBox {
+    height: 50px;
+    display: flex;
+    margin-top: 30px;
+    padding: 0 20px;
+  }
+
+  .inputTitle {
+    font-size: 22px;
+    line-height: 50px;
+    text-align: right;
+    padding-right: 40px;
+  }
+
   input {
     font-family: 'GyeonggiBatang';
-    width: 904px;
-    height: 50px;
-    font-size: 18px;
+    width: 704px;
+    font-size: 16px;
     padding: 17px;
-    border: 2px solid black;
+    border: 1px solid black;
+    border-radius: 3px;
 
     &:focus {
       outline: none;
     }
   }
 
+  .charCnt {
+    padding: 10px 25px 10px 10px;
+    height: 50px;
+    text-align: right;
+    font-size: 20px;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  .textareaBox {
+    display: flex;
+    margin-top: 30px;
+    padding: 0 20px;
+  }
+
   textarea {
     font-family: 'GyeonggiBatang';
-    width: 904px;
-    height: 400px;
-    font-size: 19px;
+    width: 704px;
+    height: 350px;
+    font-size: 16px;
     line-height: 30px;
-    margin: 30px 0;
     padding: 15px;
     resize: none;
-    border: 2px solid black;
+    border: 1px solid black;
+    border-radius: 3px;
 
     &:focus {
       outline: none;
     }
+  }
+
+  .writePostBtnGroup {
+    display: flex;
+    justify-content: right;
+    padding-right: 20px;
   }
 
   button {
@@ -50,14 +93,11 @@ const WritePostBlock = styled.div`
     font-size: 18px;
     background-color: white;
     font-weight: bold;
+    margin-top: 30px;
 
     &:hover {
       cursor: pointer;
     }
-  }
-
-  .writePostBtnGroup {
-    display: flex;
   }
 
   .backToList {
@@ -68,14 +108,19 @@ const WritePostBlock = styled.div`
   .writeBtn {
     background-color: green;
     color: white;
-    margin-left: 30px;
+    margin-left: 20px;
   }
 `;
 
 function WritePost() {
+  //url 이동을 위한 useNavigate
+  const navigate = useNavigate();
+
+  const { loggedIn, loggedUser } = useContext(Context);
   const [inputs, setInputs] = useState({
     title: '',
     content: '',
+    writer: loggedUser.user_id,
   });
 
   const { title, content } = inputs;
@@ -90,39 +135,54 @@ function WritePost() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    try {
-      const callApi = async () => {
-        const res = await axios.post(
-          'http://localhost:5000/board/write',
-          inputs
-        );
-      };
-      callApi();
-    } catch (error) {
-      console.error(error);
+    if (loggedIn) {
+      try {
+        const callApi = async () => {
+          const write = await axios.post(
+            'http://localhost:5000/board/write',
+            inputs
+          );
+        };
+        callApi();
+        //성공하면 해당 url로 이동
+        navigate('/board');
+        window.upload();
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      alert('로그인 후 이용해주세요');
+      navigate('/login');
     }
   };
 
   return (
     <WritePostBlock>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='pageTitle'>자유게시판 게시글 작성</div>
+        <div className='inputBox'>
+          <div className='inputTitle'>제목</div>
           <input
             type='text'
             name='title'
             value={title}
             onChange={handleInputs}
-            placeholder='제목을 입력하세요'
+            placeholder='게시글 제목을 입력해주세요'
           />
         </div>
-        <div>
+        <div className='charCnt'>0/40</div>
+
+        <div className='textareaBox'>
+          <div className='inputTitle'>내용</div>
           <textarea
             name='content'
-            placeholder='내용을 입력하세요'
+            placeholder='게시글 내용을 입력해주세요'
             value={content}
             onChange={handleInputs}
           />
         </div>
+        <div className='charCnt'>0/100</div>
+
         <div className='writePostBtnGroup'>
           <button>
             <NavLink to='/board' className='backToList'>

@@ -39,8 +39,17 @@ router.route('/').get(async (req, res, next) => {
 
 router.route('/write').post(async (req, res, next) => {
   try {
-    console.log(req.body);
-  } catch (error) {
+    const writer = await User.findOne({
+      attributes: ['id'],
+      where: { user_id: req.body.writer },
+    });
+
+    await Board.create({
+      title: req.body.title,
+      content: req.body.content,
+      writer: writer.id,
+    });
+  } catch (err) {
     console.error(err);
   }
 });
