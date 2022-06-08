@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import Context from '../../../context/Context';
 
 const BoardHeaderBlk = styled.div`
-  width: 954px;
+  width: 984px;
   margin: 0 15px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   display: flex;
   justify-content: space-between;
 
   .boardTitle {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
   }
 
@@ -19,16 +20,20 @@ const BoardHeaderBlk = styled.div`
   }
 
   .searchPost {
-    padding: 0 10px;
     width: 300px;
+    height: 40px;
+    padding: 0 10px;
     font-family: 'GyeonggiBatang';
-    font-size: 16px;
+    font-size: 17px;
+    border: 1px solid black;
   }
 
   .boardBtn {
     border: 1px solid black;
     text-align: center;
-    padding: 8px;
+    width: 53px;
+    font-size: 17px;
+    line-height: 40px;
     margin-left: 15px;
 
     &:hover {
@@ -45,6 +50,7 @@ const BoardHeaderBlk = styled.div`
 `;
 
 function BoardHeader() {
+  const { loggedIn } = useContext(Context);
   const handleSearchBtn = () => {
     console.log('Clicked search button');
   };
@@ -64,11 +70,13 @@ function BoardHeader() {
         <div className='listBtn boardBtn' onClick={handleListBtn}>
           목록
         </div>
-        <div className='boardBtn'>
-          <NavLink to='/board/write' className='boardWriteBtn'>
-            쓰기
-          </NavLink>
-        </div>
+        {loggedIn && (
+          <div className='boardBtn'>
+            <NavLink to='/board/write' className='boardWriteBtn'>
+              쓰기
+            </NavLink>
+          </div>
+        )}
       </div>
     </BoardHeaderBlk>
   );
