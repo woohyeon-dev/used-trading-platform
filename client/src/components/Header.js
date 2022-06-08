@@ -4,7 +4,7 @@ import HeaderBtn from './HeaderBtn';
 import { NavLink } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
-  padding: 20px;
+  padding: 0 30px;
   background-color: white;
   border-bottom: 1px solid black;
   position: sticky;
@@ -14,10 +14,15 @@ const HeaderBlock = styled.div`
   justify-content: space-between;
 
   .logo {
-    width: 220px;
+    width: 200px;
     height: 60px;
-    border: 2px solid black;
     color: black;
+    font-family: 'YES24';
+    color: green;
+    font-size: 43px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 60px;
     text-decoration: none;
 
     &:hover {
@@ -28,8 +33,8 @@ const HeaderBlock = styled.div`
   .search {
     font-family: 'GyeonggiBatang';
     font-size: 16px;
-    width: 450px;
-    height: 40px;
+    width: 440px;
+    height: 45px;
     line-height: 40px;
     padding: 0 15px;
     border: 2px solid green;
@@ -44,7 +49,7 @@ function Header() {
   return (
     <HeaderBlock>
       <NavLink to='/' className='logo'>
-        logo
+        영숙마켓
       </NavLink>
       <input className='search' placeholder='상품명을 입력하세요'></input>
       <HeaderBtn />
