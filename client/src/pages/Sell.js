@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Context from '../context/Context';
@@ -180,13 +180,14 @@ function Sell() {
     category: '1',
     price: '',
     discript: '',
-    writer: loggedUser.user_id,
     image: '',
   });
   const [image, setImage] = useState({
     image_file: '',
     preview_URL: '',
   });
+  const [titleCnt, setTitleCnt] = useState(0);
+  const [discriptCnt, setDiscriptCnt] = useState(0);
 
   const { title, discript, price } = postInfo;
 
@@ -197,6 +198,14 @@ function Sell() {
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
+
+  useEffect(() => {
+    setTitleCnt(postInfo.title.length);
+  }, [postInfo.title]);
+
+  useEffect(() => {
+    setDiscriptCnt(postInfo.discript.length);
+  }, [postInfo.discript]);
 
   const onClickImageUpload = e => {
     imageInput.current.click();
@@ -246,7 +255,7 @@ function Sell() {
             onChange={handleInputs}
             placeholder='상품 제목을 입력해주세요'
           />
-          <div className='titleCharCnt'>0/40</div>
+          <div className='titleCharCnt'>{titleCnt}/40</div>
         </div>
         <div className='bottomLine'></div>
 
@@ -292,7 +301,7 @@ function Sell() {
           <div className='inputTitle'>가격</div>
           <input
             className='priceInput'
-            type='text'
+            type='number'
             name='price'
             value={price}
             onChange={handleInputs}
@@ -311,7 +320,7 @@ function Sell() {
             onChange={handleInputs}
           />
         </div>
-        <div className='discriptCharCnt'>0/100</div>
+        <div className='discriptCharCnt'>{discriptCnt}/100</div>
         <div className='bottomLine'></div>
 
         <div className='writePostBtnGroup'>
