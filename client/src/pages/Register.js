@@ -79,7 +79,6 @@ function Register() {
     if (
       registerInfo.name.length !== 0 &&
       registerInfo.nickname.length !== 0 &&
-      registerInfo.addr.length !== 0 &&
       registerInfo.phone_num.length !== 0
     ) {
       try {

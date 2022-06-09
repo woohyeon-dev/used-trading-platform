@@ -20,6 +20,12 @@ const NextPageInputBlock = styled.div`
     }
   }
 
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   .message {
     padding: 0 11px;
     margin-bottom: 6px;
@@ -59,8 +65,19 @@ const NextPageInputBlock = styled.div`
 function NextPageInput({ registerInfo, handleChange, handlePage }) {
   const [isName, setIsName] = useState(false);
   const [isNickname, setIsNickname] = useState(false);
-  const [isAddr, setIsAddr] = useState(false);
   const [isPhoneNum, setIsPhoneNum] = useState(false);
+
+  const handleTellInput = e => {
+    const regex = /^[0-9\b]{0,11}$/;
+    if (regex.test(e.target.value)) {
+      handleChange(e);
+    }
+    if (e.target.value.length !== 0) {
+      setIsPhoneNum(true);
+    } else {
+      setIsPhoneNum(false);
+    }
+  };
 
   return (
     <NextPageInputBlock>
@@ -102,36 +119,24 @@ function NextPageInput({ registerInfo, handleChange, handlePage }) {
       )}
       <input
         className='nextInputs'
-        type='text'
-        placeholder='주소'
+        type='number'
+        placeholder='기숙사 호수'
         name='addr'
         value={registerInfo.addr}
         onChange={e => {
           handleChange(e);
-          if (e.target.value.length !== 0) {
-            setIsAddr(true);
-          } else {
-            setIsAddr(false);
-          }
         }}
       />
-      {isAddr ? null : (
-        <div className='message'>{'주소는 필수 입력 항목입니다.'}</div>
-      )}
+      <div className='message'>
+        {'ex) 705호 -> 705, '}&nbsp;{'입주자가 아닐시 공란'}
+      </div>
       <input
         className='nextInputs'
-        type='text'
+        type='tel'
         placeholder='전화번호'
         name='phone_num'
         value={registerInfo.phone_num}
-        onChange={e => {
-          handleChange(e);
-          if (e.target.value.length !== 0) {
-            setIsPhoneNum(true);
-          } else {
-            setIsPhoneNum(false);
-          }
-        }}
+        onChange={handleTellInput}
       />
       {isPhoneNum ? null : (
         <div className='message'>{'전화번호는 필수 입력 항목입니다.'}</div>
