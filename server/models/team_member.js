@@ -22,6 +22,10 @@ module.exports = class Team_member extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
+        introduction: {
+          type: Sequelize.STRING(100),
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -36,7 +40,5 @@ module.exports = class Team_member extends Sequelize.Model {
     );
   }
 
-  static associate(db) {
-    
-  }
+  static associate(db) {}
 };
