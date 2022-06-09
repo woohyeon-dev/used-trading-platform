@@ -1,28 +1,31 @@
 const Sequelize = require('sequelize');
-const { Product } = require('./product');
 
-module.exports = class Category extends Sequelize.Model {
+module.exports = class Jap_reply extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        cat_id: {
+        reply_id: {
           autoIncrement: true,
           type: Sequelize.INTEGER,
           allowNull: false,
           primaryKey: true,
         },
-        cat_name: {
-          type: Sequelize.STRING(20),
+        descript: {
+          type: Sequelize.STRING(50),
           allowNull: false,
-          unique: 'cat_name',
         },
+        regdate: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
       },
       {
         sequelize,
         timestamps: false,
         underscored: false,
-        modelName: 'Category',
-        tableName: 'category',
+        modelName: 'Jap_reply',
+        tableName: 'jap_reply',
         paranoid: false,
         charset: 'utf8',
         collate: 'utf8_general_ci',
@@ -31,9 +34,6 @@ module.exports = class Category extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Category.hasMany(db.Product, {
-      foreignKey: 'cat_id',
-      sourceKey: 'cat_id',
-    });
+    db.Jap_reply.belongsTo(db.User, { foreignKey: 'writer', targetKey: 'id' });
   }
 };

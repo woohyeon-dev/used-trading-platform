@@ -20,7 +20,7 @@ module.exports = class Board extends Sequelize.Model {
           defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         title: {
-          type: Sequelize.STRING(100),
+          type: Sequelize.STRING(40),
           allowNull: false,
         },
         views: {
@@ -52,6 +52,5 @@ module.exports = class Board extends Sequelize.Model {
       foreignKey: 'p_id',
       targetKey: 'post_id',
     });
-    db.Board.hasMany(db.Image, { foreignKey: 'p_id', targetKey: 'post_id' });
   }
 };

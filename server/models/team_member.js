@@ -1,28 +1,34 @@
 const Sequelize = require('sequelize');
-const { Product } = require('./product');
 
-module.exports = class Category extends Sequelize.Model {
+module.exports = class Team_member extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        cat_id: {
+        mb_id: {
           autoIncrement: true,
           type: Sequelize.INTEGER,
           allowNull: false,
           primaryKey: true,
         },
-        cat_name: {
-          type: Sequelize.STRING(20),
+        name: {
+          type: Sequelize.STRING(50),
           allowNull: false,
-          unique: 'cat_name',
+        },
+        image: {
+          type: Sequelize.STRING(100),
+          allowNull: false,
+        },
+        mb_tell: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
         },
       },
       {
         sequelize,
         timestamps: false,
         underscored: false,
-        modelName: 'Category',
-        tableName: 'category',
+        modelName: 'Team_member',
+        tableName: 'team_member',
         paranoid: false,
         charset: 'utf8',
         collate: 'utf8_general_ci',
@@ -31,9 +37,6 @@ module.exports = class Category extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Category.hasMany(db.Product, {
-      foreignKey: 'cat_id',
-      sourceKey: 'cat_id',
-    });
+    
   }
 };

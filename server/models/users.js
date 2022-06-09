@@ -65,5 +65,6 @@ module.exports = class User extends Sequelize.Model {
       foreignKey: 'writer',
       sourceKey: 'id',
     });
+    db.User.hasMany(db.Jap_reply, { foreignKey: 'writer', sourceKey: 'id' });
   }
 };

@@ -4,13 +4,15 @@ module.exports = class Image extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        id: {
+          autoIncrement: true,
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          primaryKey: true,
+        },
         filename: {
           type: Sequelize.STRING(50),
           allowNull: true,
-        },
-        type: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
         },
       },
       {
@@ -27,6 +29,5 @@ module.exports = class Image extends Sequelize.Model {
 
   static associate(db) {
     db.Image.belongsTo(db.Product, { foreignKey: 'p_id', targetKey: 'p_id' });
-    db.Image.belongsTo(db.Board, { foreignKey: 'p_id', targetKey: 'post_id' });
   }
 };

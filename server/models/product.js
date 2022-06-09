@@ -29,7 +29,7 @@ module.exports = class Product extends Sequelize.Model {
           allowNull: true,
         },
         title: {
-          type: Sequelize.STRING(100),
+          type: Sequelize.STRING(40),
           allowNull: false,
         },
       },
