@@ -143,7 +143,7 @@ function PrevPageInput({ registerInfo, handleChange, handlePage }) {
         className={`nextBtn ${
           isCorrect &&
           registerInfo.user_id.length !== 0 &&
-          registerInfo.password !== 0
+          registerInfo.password.length !== 0
             ? 'able'
             : null
         }`}

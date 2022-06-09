@@ -4,7 +4,6 @@ import HeaderBtn from './HeaderBtn';
 import { NavLink } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
-  padding: 0 30px;
   background-color: white;
   border-bottom: 1px solid black;
   position: sticky;
@@ -14,6 +13,7 @@ const HeaderBlock = styled.div`
   justify-content: space-between;
 
   .logo {
+    margin-left: 20px;
     width: 200px;
     height: 60px;
     color: black;
