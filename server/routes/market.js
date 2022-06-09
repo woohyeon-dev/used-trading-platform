@@ -53,7 +53,6 @@ router.route('/product').get(async (req, res, next) => {
     }
     res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -71,7 +70,6 @@ router.route('/category').get(async (req, res, next) => {
     }
     res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -79,8 +77,9 @@ router.route('/category').get(async (req, res, next) => {
 router.route('/sell').post(async (req, res, next) => {
   try {
     console.log(req.body);
+    res.status(201).send('상품 판매 등록 완료!');
   } catch (error) {
-    console.error(err);
+    next(err);
   }
 });
 

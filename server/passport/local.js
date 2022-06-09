@@ -17,7 +17,9 @@ module.exports = () => {
       },
       async function (user_id, password, done) {
         try {
-          const user = await User.findOne({ where: { user_id } }); // 로그인 시도에서 user_id 있는 조건으로 찾아보기.
+          const user = await User.findOne({
+            where: { user_id },
+          }); // 로그인 시도에서 user_id 있는 조건으로 찾아보기.
           if (!user) {
             // passport에서는 res로 응답이 아닌, 우선 done으로 처리를 한다.
             return done(null, false, { reason: '존재하지 않는 아이디' });

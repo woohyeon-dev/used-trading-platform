@@ -120,7 +120,6 @@ function WritePost() {
   const [inputs, setInputs] = useState({
     title: '',
     content: '',
-    writer: loggedUser.user_id,
   });
 
   const { title, content } = inputs;
@@ -136,17 +135,17 @@ function WritePost() {
   const handleSubmit = e => {
     e.preventDefault();
     if (loggedIn) {
+      const callApi = async () => {
+        const res = await axios.post(
+          'http://localhost:5000/board/write',
+          inputs,
+          { withCredentials: true }
+        );
+        console.log(res.data);
+      };
       try {
-        const callApi = async () => {
-          const write = await axios.post(
-            'http://localhost:5000/board/write',
-            inputs
-          );
-        };
         callApi();
-        //성공하면 해당 url로 이동
-        navigate('/board');
-        window.upload();
+        navigate('/board'); //성공하면 해당 url로 이동
       } catch (error) {
         console.error(error);
       }

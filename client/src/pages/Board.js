@@ -24,7 +24,11 @@ function Board() {
       const res = await axios.get('http://localhost:5000/board');
       setPosts(res.data);
     };
-    callApi();
+    try {
+      callApi();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   useEffect(() => {

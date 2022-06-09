@@ -44,7 +44,11 @@ function Market() {
       });
       setProds(res.data);
     };
-    callApi();
+    try {
+      callApi();
+    } catch (error) {
+      console.log(error);
+    }
   }, [category]);
 
   return (

@@ -49,7 +49,11 @@ function Home() {
       setRecentPosts(res1.data);
       setRecentProds(res2.data);
     };
-    callApi();
+    try {
+      callApi();
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   return (
@@ -58,7 +62,7 @@ function Home() {
         현지학기제 광고
       </NavLink>
       <div className='homeContent'>
-        <NavLink to='/market/categories' className='title'>
+        <NavLink to='/market' className='title'>
           최근 등록 상품
         </NavLink>
         <div className='titleBox'>

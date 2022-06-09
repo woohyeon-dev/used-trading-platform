@@ -112,4 +112,8 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
   return res.send('로그아웃');
 });
 
+router.route('/user').post((req, res) => {
+  return res.status(200).json({ user: req.user });
+});
+
 module.exports = router;

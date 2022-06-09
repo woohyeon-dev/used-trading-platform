@@ -32,25 +32,21 @@ router.route('/').get(async (req, res, next) => {
     }
     res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
 
 router.route('/write').post(async (req, res, next) => {
   try {
-    const writer = await User.findOne({
-      attributes: ['id'],
-      where: { user_id: req.body.writer },
-    });
-
     await Board.create({
       title: req.body.title,
       content: req.body.content,
-      writer: writer.id,
+      writer: req.user,
     });
+
+    return res.status(201).send('게시글 등록 완료!');
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 });
 

@@ -7,13 +7,6 @@ import Context from './context/Context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const ContextProvider = ({ children }) => {
-  const setLoggedUser = data => {
-    setState(prevState => ({
-      ...prevState,
-      loggedUser: data,
-    }));
-  };
-
   const setLoggedIn = condition => {
     setState(prevState => ({
       ...prevState,
@@ -22,9 +15,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const initialState = {
-    loggedUser: {},
     loggedIn: false,
-    setLoggedUser,
     setLoggedIn,
   };
 

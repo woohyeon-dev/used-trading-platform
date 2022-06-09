@@ -94,7 +94,7 @@ const LoginBlock = styled.div`
 
 function Login() {
   //글로벌 전역 상태값 loggedUser, loggedIn, setLoggedUser, setLoggedIn를 받아옴
-  const { setLoggedIn, setLoggedUser } = useContext(Context);
+  const { setLoggedIn } = useContext(Context);
 
   //url 이동을 위한 useNavigate
   const navigate = useNavigate();
@@ -123,7 +123,6 @@ function Login() {
         { withCredentials: true }
       );
       setLoggedIn(true);
-      setLoggedUser(login.data);
       //성공하면 해당 url로 이동
       navigate('/');
     } catch (error) {

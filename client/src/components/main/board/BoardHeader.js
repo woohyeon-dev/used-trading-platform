@@ -71,11 +71,9 @@ function BoardHeader() {
           목록
         </div>
         {loggedIn && (
-          <div className='boardBtn'>
-            <NavLink to='/board/write' className='boardWriteBtn'>
-              쓰기
-            </NavLink>
-          </div>
+          <NavLink to='/board/write' className='boardWriteBtn'>
+            <div className='boardBtn'>쓰기</div>
+          </NavLink>
         )}
       </div>
     </BoardHeaderBlk>

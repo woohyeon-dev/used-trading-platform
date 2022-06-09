@@ -34,22 +34,22 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const { loggedIn, setLoggedIn } = useContext(Context);
+  const { setLoggedIn } = useContext(Context);
   useEffect(() => {
-    try {
-      const callApi = async () => {
-        const user = await axios.post(
-          'http://localhost:5000/home/user',
-          {},
-          { withCredentials: true }
-        );
-        if (user.data.user) {
-          setLoggedIn(true);
-        } else {
-          setLoggedIn(false);
-        }
-      };
+    const callApi = async () => {
+      const user = await axios.post(
+        'http://localhost:5000/auth/user',
+        {},
+        { withCredentials: true }
+      );
+      if (user.data.user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    };
 
+    try {
       callApi();
     } catch (error) {
       alert(error);

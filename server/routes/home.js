@@ -33,7 +33,6 @@ router.route('/home/board').get(async (req, res, next) => {
     }
     res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -69,13 +68,8 @@ router.route('/home/product').get(async (req, res, next) => {
     }
     res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
-});
-
-router.post('/home/user', (req, res) => {
-  return res.status(200).json({ user: req.user });
 });
 
 module.exports = router;
