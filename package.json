@@ -1,34 +1,23 @@
 {
-  "name": "Used_trading_platform",
-  "version": "0.0.1",
-  "description": "기숙사생들끼리 사용할 수 있는 중고거래 플랫폼 서비스",
-  "main": "app.js",
+  "name": "used-trading-platform",
+  "version": "1.0.0",
+  "description": "Used Trading Platform for Dormitory Students",
   "scripts": {
-    "app": "cd server && nodemon app",
+    "app": "cd server && npm start",
     "client": "cd client && npm start",
     "start": "concurrently --kill-others-on-fail \"npm run app\" \"npm run client\""
   },
-  "author": "whKwon",
-  "license": "MIT",
   "dependencies": {
-    "axios": "^0.27.2",
-    "bcrypt": "^5.0.1",
-    "concurrently": "^7.1.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.1",
-    "express-session": "^1.17.2",
-    "morgan": "^1.10.0",
-    "mysql2": "^2.3.3",
-    "passport": "^0.6.0",
-    "passport-kakao": "^1.0.1",
-    "passport-local": "^1.0.0",
-    "sequelize": "^6.19.0",
-    "sequelize-cli": "^6.4.1",
-    "web-vitals": "^2.1.4"
+    "concurrently": "^7.1.0"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.16"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woohyeon-dev/Used-trading-platform.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woohyeon-dev/Used-trading-platform/issues"
+  },
+  "homepage": "https://github.com/woohyeon-dev/Used-trading-platform#readme"
 }
