@@ -104,6 +104,7 @@ function Login() {
     user_id: '',
     password: '',
   });
+  const { user_id, password } = loginInfo;
 
   //input에 입력하면 자동적으로 loginInfo state값 변경
   const handleChange = e => {
@@ -117,11 +118,12 @@ function Login() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const login = await axios.post(
+      const res = await axios.post(
         'http://localhost:5000/auth/login',
         loginInfo,
         { withCredentials: true }
       );
+      console.log(res.data);
       setLoggedIn(true);
       //성공하면 해당 url로 이동
       navigate('/');
@@ -142,7 +144,7 @@ function Login() {
             type='text'
             placeholder='아이디'
             name='user_id'
-            value={loginInfo.user_id}
+            value={user_id}
             onChange={handleChange}
           />
           <input
@@ -150,7 +152,7 @@ function Login() {
             type='password'
             placeholder='비밀번호'
             name='password'
-            value={loginInfo.password}
+            value={password}
             onChange={handleChange}
           />
           <button className='loginBtn' type='submit'>

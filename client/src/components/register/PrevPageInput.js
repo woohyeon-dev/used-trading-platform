@@ -65,6 +65,7 @@ const PrevPageInputBlock = styled.div`
 `;
 
 function PrevPageInput({ registerInfo, handleChange, handlePage }) {
+  const { user_id, password } = registerInfo;
   // 비밀번호 확인 input 값 관리
   const [confirm, setConfirm] = useState('');
   // 비밀번호 확인결과
@@ -74,7 +75,7 @@ function PrevPageInput({ registerInfo, handleChange, handlePage }) {
 
   const onChangeConfirm = e => {
     setConfirm(e.target.value);
-    if (registerInfo.password === e.target.value) {
+    if (password === e.target.value) {
       setIsCorrect(true);
     } else {
       setIsCorrect(false);
@@ -88,7 +89,7 @@ function PrevPageInput({ registerInfo, handleChange, handlePage }) {
         type='text'
         placeholder='아이디'
         name='user_id'
-        value={registerInfo.user_id}
+        value={user_id}
         onChange={e => {
           handleChange(e);
           if (e.target.value.length !== 0) {
@@ -106,7 +107,7 @@ function PrevPageInput({ registerInfo, handleChange, handlePage }) {
         type='password'
         placeholder='비밀번호'
         name='password'
-        value={registerInfo.password}
+        value={password}
         onChange={e => {
           handleChange(e);
 
@@ -141,18 +142,12 @@ function PrevPageInput({ registerInfo, handleChange, handlePage }) {
       )}
       <div
         className={`nextBtn ${
-          isCorrect &&
-          registerInfo.user_id.length !== 0 &&
-          registerInfo.password.length !== 0
+          isCorrect && user_id.length !== 0 && password.length !== 0
             ? 'able'
             : null
         }`}
         onClick={e => {
-          if (
-            isCorrect &&
-            registerInfo.user_id.length !== 0 &&
-            registerInfo.password.length !== 0
-          ) {
+          if (isCorrect && user_id.length !== 0 && password.length !== 0) {
             handlePage(e);
           }
         }}

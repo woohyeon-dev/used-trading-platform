@@ -54,6 +54,7 @@ function Register() {
     addr: '',
     phone_num: '',
   });
+  const { nickname, name, phone_num } = registerInfo;
   // 회원가입 다음 페이지 관리
   const [isNextPage, setIsNextPage] = useState(false);
 
@@ -76,16 +77,13 @@ function Register() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (
-      registerInfo.name.length !== 0 &&
-      registerInfo.nickname.length !== 0 &&
-      registerInfo.phone_num.length !== 0
-    ) {
+    if (name.length !== 0 && nickname.length !== 0 && phone_num.length !== 0) {
       try {
-        const register = await axios.post(
+        const res = await axios.post(
           'http://localhost:5000/auth/register',
           registerInfo
         );
+        console.log(res.data);
         //성공하면 해당 url로 이동
         navigate('/');
       } catch (error) {

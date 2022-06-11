@@ -63,6 +63,7 @@ const NextPageInputBlock = styled.div`
 `;
 
 function NextPageInput({ registerInfo, handleChange, handlePage }) {
+  const { nickname, name, addr, phone_num } = registerInfo;
   const [isName, setIsName] = useState(false);
   const [isNickname, setIsNickname] = useState(false);
   const [isPhoneNum, setIsPhoneNum] = useState(false);
@@ -86,7 +87,7 @@ function NextPageInput({ registerInfo, handleChange, handlePage }) {
         type='text'
         placeholder='사용자 이름'
         name='name'
-        value={registerInfo.name}
+        value={name}
         onChange={e => {
           handleChange(e);
           if (e.target.value.length !== 0) {
@@ -104,7 +105,7 @@ function NextPageInput({ registerInfo, handleChange, handlePage }) {
         type='text'
         placeholder='닉네임'
         name='nickname'
-        value={registerInfo.nickname}
+        value={nickname}
         onChange={e => {
           handleChange(e);
           if (e.target.value.length !== 0) {
@@ -113,6 +114,7 @@ function NextPageInput({ registerInfo, handleChange, handlePage }) {
             setIsNickname(false);
           }
         }}
+        required
       />
       {isNickname ? null : (
         <div className='message'>{'닉네임은 필수 입력 항목입니다.'}</div>
@@ -122,10 +124,11 @@ function NextPageInput({ registerInfo, handleChange, handlePage }) {
         type='number'
         placeholder='기숙사 호수'
         name='addr'
-        value={registerInfo.addr}
+        value={addr}
         onChange={e => {
           handleChange(e);
         }}
+        required
       />
       <div className='message'>
         {'ex) 705호 -> 705, '}&nbsp;{'입주자가 아닐시 공란'}
@@ -135,8 +138,9 @@ function NextPageInput({ registerInfo, handleChange, handlePage }) {
         type='tel'
         placeholder='전화번호'
         name='phone_num'
-        value={registerInfo.phone_num}
+        value={phone_num}
         onChange={handleTellInput}
+        required
       />
       {isPhoneNum ? null : (
         <div className='message'>{'전화번호는 필수 입력 항목입니다.'}</div>
