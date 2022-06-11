@@ -29,7 +29,7 @@ module.exports = class User extends Sequelize.Model {
         },
         addr: {
           type: Sequelize.STRING(32),
-          allowNull: false,
+          allowNull: true,
         },
         phone_num: {
           type: Sequelize.INTEGER,
