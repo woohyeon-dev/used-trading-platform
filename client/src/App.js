@@ -54,7 +54,7 @@ function App() {
     } catch (error) {
       alert(error);
     }
-  }, []);
+  }, [setLoggedIn]);
 
   return (
     <>
@@ -67,7 +67,7 @@ function App() {
         {/* Register Page */}
         <Route path='/register' element={<Register />} />
         {/* Semester Page */}
-        <Route path='/lss' element={<Semester />} />
+        <Route path='/semester' element={<Semester />} />
         {/* Error Page */}
         <Route path='/error' element={<Error />} />
       </Routes>

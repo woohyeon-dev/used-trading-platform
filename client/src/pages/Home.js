@@ -58,7 +58,7 @@ function Home() {
 
   return (
     <HomeBlock>
-      <NavLink to='/lss' className='advertisement'>
+      <NavLink to='/semester' className='advertisement'>
         현지학기제 광고
       </NavLink>
       <div className='homeContent'>

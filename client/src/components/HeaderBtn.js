@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Context from '../context/Context';
 import axios from 'axios';
 
@@ -56,7 +56,7 @@ function HeaderBtn() {
 
   const handleSellBtn = async e => {
     if (loggedIn) {
-      navigate('/market/sell');
+      navigate('/market/create');
     } else {
       alert('로그인 후 이용가능합니다.');
       navigate('/login');

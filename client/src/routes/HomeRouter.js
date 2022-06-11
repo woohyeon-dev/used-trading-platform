@@ -6,8 +6,8 @@ import {
   Market,
   Board,
   MyPage,
-  WritePost,
-  Sell,
+  CreatePost,
+  CreateProduct,
   Post,
   Product,
 } from '../pages';
@@ -28,14 +28,14 @@ function HomeRouter() {
         <Route path='market/categories/:cat_id' element={<Market />} />
         {/* Product Page */}
         <Route path='market/product/:p_id' element={<Product />} />
-        {/* WriteProdPost Page */}
-        <Route path='/market/sell' element={<Sell />} />
+        {/* CreateProduct Page */}
+        <Route path='/market/create' element={<CreateProduct />} />
         {/* Board Page */}
         <Route path='board' element={<Board />} />
         {/* Post Page */}
         <Route path='board/:post_id' element={<Post />} />
-        {/* WritePost Page */}
-        <Route path='board/write' element={<WritePost />} />
+        {/* CreatePost Page */}
+        <Route path='board/create' element={<CreatePost />} />
         {/* MyPage Page */}
         <Route path='mypage' element={<MyPage />} />
         {/* Error Page */}
