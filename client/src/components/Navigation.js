@@ -9,6 +9,7 @@ const NavBlock = styled.div`
   display: flex;
   align-items: center;
   position: sticky;
+  z-index: 10;
   top: 100px;
 
   .navButtons {

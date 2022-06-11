@@ -17,9 +17,12 @@ const homeRouter = require('./routes/home');
 const boardRouter = require('./routes/board');
 const marketRouter = require('./routes/market');
 const authRouter = require('./routes/auth');
+const groupRouter = require('./routes/group');
 
 const app = express();
 app.set('port', process.env.PORT || 5000); // 포트 설정
+
+app.use('/img', express.static('public'));
 
 // 이 코드 발견 시 시퀄라이즈 실행
 sequelize
@@ -37,7 +40,7 @@ passportConfig();
 app.use(morgan('dev')); // 개발모드로 로깅
 
 // 클라이언트에서 보내준 데이터를 json으로 파싱해서 req.body에 데이터를 넣어주는 역할
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // extended 객체 안에 객체를 파싱할 수 있게 하려면 true
 app.use(express.urlencoded({ extended: false }));
@@ -75,6 +78,7 @@ app.use('/', homeRouter);
 app.use('/board', boardRouter);
 app.use('/market', marketRouter);
 app.use('/auth', authRouter);
+app.use('/group', groupRouter);
 
 // 404 error middleware
 app.use((req, res, next) => {

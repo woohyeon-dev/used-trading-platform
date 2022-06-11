@@ -8,6 +8,9 @@ import BoardHeader from './main/board/BoardHeader';
 import BoardList from './main/board/BoardList';
 import Category from './main/market/Category';
 import ProductList from './main/market/ProductList';
+import Member from './main/group/Member';
+import MemberCreate from './main/group/MemberCreate';
+import MemberUpdateModal from './main/group/MemberUpdateModal';
 import NextPageInput from './register/NextPageInput';
 import PrevPageInput from './register/PrevPageInput';
 
@@ -22,6 +25,9 @@ export {
   Pagination,
   Category,
   ProductList,
+  Member,
+  MemberCreate,
+  MemberUpdateModal,
   NextPageInput,
   PrevPageInput,
 };

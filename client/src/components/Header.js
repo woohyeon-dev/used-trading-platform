@@ -7,6 +7,7 @@ const HeaderBlock = styled.div`
   background-color: white;
   border-bottom: 1px solid black;
   position: sticky;
+  z-index: 10;
   top: 0;
   display: flex;
   align-items: center;
