@@ -7,7 +7,7 @@ module.exports = {
       next(); // 다음 미들웨어
     } else {
       //401(Unauthorized)는 대상 리소스에 대한 유효한 인증 자격 증명이 부족하여 요청이 적용되지 않았음을 의미
-      res.status(401).send('로그인이 필요합니다.');
+      return res.status(401).send('로그인이 필요합니다.');
     }
   },
 
@@ -15,7 +15,7 @@ module.exports = {
     if (!req.isAuthenticated()) {
       next();
     } else {
-      res.status(401).send('로그아웃 후 접근이 가능합니다.');
+      return res.status(401).send('로그아웃 후 접근이 가능합니다.');
     }
   },
 };

@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const User = require('../models/users');
 const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 
-const User = require('../models/users');
+const router = express.Router();
 
 router.post('/', (req, res) => {
   if (req.user) {
@@ -56,9 +56,9 @@ router.post('/register', isNotLoggedIn, async (req, res) => {
     });
 
     // 요청에 대한 성공으로 status(201) : 생성이 됐다는 의미 (기재하는게 좋다.)
-    res.status(201).send('create User!');
+    return res.status(201).send('회원가입이 정상적으로 처리되었습니다.');
   } catch (err) {
-    res.status(500).send('서버에러');
+    res.status(500).send('서버에서 에러가 발생했습니다.');
     next(err); // status(500) - 서버에러
   }
 });
@@ -76,7 +76,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     }
     if (info) {
       // 클라이언트 에러 (비밀번호가 틀렸거나, 계정이 없거나), info.reason에 에러 내용이 있음.
-      res.status(403).send(info.reason);
+      return res.status(403).send(info.reason);
     }
     // 아래는 마지막으로 에러를 검사하는 코드다.
     // 성공하면 passport의 serialize가 실행된다.
@@ -85,14 +85,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         console.error(loginErr);
         return next(loginErr);
       }
-
-      // 유저 id, 닉네임 정보 가져오기
-      const userIdAndNickname = await User.findOne({
-        where: { user_id: user.user_id },
-        attributes: ['user_id', 'nickname'],
-      });
-      // 유저 id, 닉네임 정보를 json으로 응답
-      return res.status(200).json(userIdAndNickname);
+      return res.status(200).send('로그인이 정상적으로 처리 되었습니다.');
     });
   })(req, res, next); // 미들웨어 확장에서는 끝에 항상 넣어줘야한다.
 });
@@ -109,7 +102,7 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
   req.user = null;
   req.session.destroy();
   res.clearCookie('connect.sid');
-  return res.send('로그아웃');
+  return res.send('로그아웃이 정상적으로 처리되었습니다.');
 });
 
 router.route('/user').post((req, res) => {

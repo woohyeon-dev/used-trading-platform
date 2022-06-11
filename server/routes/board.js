@@ -4,7 +4,7 @@ const { Board, User } = require('../models/index');
 const router = express.Router();
 
 // 자유게시판 게시물 DB 정보
-router.route('/').get(async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const boards = await Board.findAll({
       attributes: {
@@ -30,13 +30,13 @@ router.route('/').get(async (req, res, next) => {
         nickname: b.User.nickname,
       });
     }
-    res.json(result);
+    return res.json(result);
   } catch (err) {
     next(err);
   }
 });
 
-router.route('/write').post(async (req, res, next) => {
+router.post('/create', async (req, res, next) => {
   try {
     await Board.create({
       title: req.body.title,
@@ -44,7 +44,7 @@ router.route('/write').post(async (req, res, next) => {
       writer: req.user,
     });
 
-    return res.status(201).send('게시글 등록 완료!');
+    return res.status(201).send('게시글이 등록되었습니다.');
   } catch (err) {
     next(err);
   }

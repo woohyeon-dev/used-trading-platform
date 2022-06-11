@@ -4,7 +4,7 @@ const { Board, Product, User } = require('../models/index');
 const router = express.Router();
 
 // 자유게시판 게시물 DB 정보
-router.route('/home/board').get(async (req, res, next) => {
+router.get('/home/board', async (req, res, next) => {
   try {
     const boards = await Board.findAll({
       attributes: {
@@ -38,7 +38,7 @@ router.route('/home/board').get(async (req, res, next) => {
 });
 
 // 중고마켓 게시물 DB 정보
-router.route('/home/product').get(async (req, res, next) => {
+router.get('/home/product', async (req, res, next) => {
   try {
     const products = await Product.findAll({
       attributes: {
@@ -66,7 +66,7 @@ router.route('/home/product').get(async (req, res, next) => {
         cat_id: p.cat_id,
       });
     }
-    res.json(result);
+    return res.json(result);
   } catch (err) {
     next(err);
   }
