@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Context from '../../../context/Context';
 
 const BoardHeaderBlk = styled.div`
@@ -50,6 +50,8 @@ const BoardHeaderBlk = styled.div`
 `;
 
 function BoardHeader() {
+  const navigate = useNavigate();
+
   const { loggedIn } = useContext(Context);
   const handleSearchBtn = () => {
     console.log('Clicked search button');
@@ -57,6 +59,15 @@ function BoardHeader() {
 
   const handleListBtn = () => {
     console.log('Clicked list button');
+  };
+
+  const handleCreateBtn = () => {
+    if (loggedIn) {
+      navigate('/board/create');
+    } else {
+      alert('로그인 후 이용가능합니다.');
+      navigate('/login');
+    }
   };
 
   return (
@@ -70,11 +81,9 @@ function BoardHeader() {
         <div className='listBtn boardBtn' onClick={handleListBtn}>
           목록
         </div>
-        {loggedIn && (
-          <NavLink to='/board/write' className='boardWriteBtn'>
-            <div className='boardBtn'>쓰기</div>
-          </NavLink>
-        )}
+        <div className='boardWriteBtn' onClick={handleCreateBtn}>
+          <div className='boardBtn'>쓰기</div>
+        </div>
       </div>
     </BoardHeaderBlk>
   );
