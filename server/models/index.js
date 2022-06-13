@@ -5,7 +5,6 @@ const Category = require('./category');
 const Product = require('./product');
 const Board_reply = require('./board_reply');
 const Product_reply = require('./product_reply');
-const Image = require('./images');
 const Team_member = require('./team_member');
 const Jap_reply = require('./jap_reply');
 
@@ -29,7 +28,6 @@ db.Category = Category;
 db.Product = Product;
 db.Board_reply = Board_reply;
 db.Product_reply = Product_reply;
-db.Image = Image;
 db.Team_member = Team_member;
 db.Jap_reply = Jap_reply;
 
@@ -39,7 +37,6 @@ Category.init(sequelize);
 Product.init(sequelize);
 Board_reply.init(sequelize);
 Product_reply.init(sequelize);
-Image.init(sequelize);
 Team_member.init(sequelize);
 Jap_reply.init(sequelize);
 
@@ -49,7 +46,6 @@ Category.associate(db);
 Product.associate(db);
 Board_reply.associate(db);
 Product_reply.associate(db);
-Image.associate(db);
 Jap_reply.associate(db);
 
 module.exports = db;

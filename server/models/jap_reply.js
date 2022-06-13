@@ -10,15 +10,15 @@ module.exports = class Jap_reply extends Sequelize.Model {
           allowNull: false,
           primaryKey: true,
         },
-        descript: {
+        content: {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
         regdate: {
-            type: Sequelize.DATE,
-            allowNull: false,
-            defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-          },
+          type: Sequelize.DATE,
+          allowNull: false,
+          defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        },
       },
       {
         sequelize,

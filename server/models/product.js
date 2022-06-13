@@ -58,6 +58,5 @@ module.exports = class Product extends Sequelize.Model {
       foreignKey: 'p_id',
       targetKey: 'p_id',
     });
-    db.Product.hasMany(db.Image, { foreignKey: 'p_id', targetKey: 'p_id' });
   }
 };
