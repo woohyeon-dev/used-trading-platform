@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { BoardHeader, BoardList, Pagination } from '../components';
+import getData from '../utils/getData';
 
 const BoardBlock = styled.div`
   margin: 40px 20px;
@@ -10,7 +11,7 @@ const BoardBlock = styled.div`
 function Board() {
   // 페이지당 보여줄 게시물 수
   const pagePer = 20;
-  // const pagePer = 1;
+
   const [posts, setPosts] = useState([]);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(pagePer);
@@ -19,13 +20,33 @@ function Board() {
   // 전체 게시물 개수
   const totalPostCnt = posts.length;
 
-  useEffect(() => {
-    const callApi = async () => {
-      const res = await axios.get('http://localhost:5000/board');
-      setPosts(res.data);
-    };
+  const goBoard = () => {
     try {
+      getData(process.env.REACT_APP_URL, '/board', setPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    goBoard();
+  }, []);
+
+  const handleSearch = e => {
+    try {
+      const callApi = async () => {
+        const res = await axios.post('http://localhost:5000/board/search', e);
+        setPosts(res.data);
+      };
       callApi();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      getData(process.env.REACT_APP_URL, '/board', setPosts);
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +63,14 @@ function Board() {
 
   return (
     <BoardBlock>
-      <BoardHeader />
+      <BoardHeader
+        handleSearch={e => {
+          handleSearch(e);
+        }}
+        goBoard={e => {
+          goBoard(e);
+        }}
+      />
       <BoardList posts={posts.slice(start, end)} />
       <Pagination
         pagePer={pagePer}

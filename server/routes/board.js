@@ -1,5 +1,6 @@
 const express = require('express');
 const { Board, User } = require('../models/index');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -33,6 +34,24 @@ router.get('/', async (req, res, next) => {
     return res.json(result);
   } catch (err) {
     next(err);
+  }
+});
+
+router.route('/search').post(async (req, res) => {
+  try {
+    console.log(req.body);
+    const query = req.body.query;
+    const result = await Board.findAll({
+      where: {
+        title: {
+          [Op.like]: '%' + query + '%',
+        },
+      },
+      order: [['post_id', 'desc']],
+    });
+    return res.json(result);
+  } catch (err) {
+    console.error(err);
   }
 });
 

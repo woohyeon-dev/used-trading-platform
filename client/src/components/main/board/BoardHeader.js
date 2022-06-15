@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Context from '../../../context/Context';
@@ -49,16 +49,21 @@ const BoardHeaderBlk = styled.div`
   }
 `;
 
-function BoardHeader() {
+function BoardHeader({ handleSearch, goBoard }) {
   const navigate = useNavigate();
-
   const { loggedIn } = useContext(Context);
-  const handleSearchBtn = () => {
-    console.log('Clicked search button');
+  const [query, setQuery] = useState('');
+
+  const handleInput = e => {
+    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    setQuery({
+      [name]: value, // name 키를 가진 값을 value 로 설정
+    });
   };
 
-  const handleListBtn = () => {
-    console.log('Clicked list button');
+  const handleSubmit = e => {
+    e.preventDefault();
+    handleSearch(query);
   };
 
   const handleCreateBtn = () => {
@@ -74,11 +79,29 @@ function BoardHeader() {
     <BoardHeaderBlk>
       <div className='boardTitle'>자유게시판</div>
       <div className='boardBtnGroup'>
-        <input className='searchPost' placeholder='제목을 입력하세요'></input>
-        <div className='searchBtn boardBtn' onClick={handleSearchBtn}>
+        <form onSubmit={handleSubmit}>
+          <input
+            type='text'
+            className='searchPost'
+            placeholder='제목을 입력하세요'
+            name='query'
+            onChange={handleInput}
+          ></input>
+        </form>
+        <div
+          className='searchBtn boardBtn'
+          onClick={() => {
+            handleSearch(query);
+          }}
+        >
           검색
         </div>
-        <div className='listBtn boardBtn' onClick={handleListBtn}>
+        <div
+          className='listBtn boardBtn'
+          onClick={() => {
+            goBoard();
+          }}
+        >
           목록
         </div>
         <div className='boardWriteBtn' onClick={handleCreateBtn}>
