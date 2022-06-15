@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -121,6 +121,8 @@ function CreatePost() {
     title: '',
     content: '',
   });
+  const [titleCnt, setTitleCnt] = useState(0);
+  const [contentCnt, setContentCnt] = useState(0);
 
   const { title, content } = inputs;
 
@@ -155,6 +157,14 @@ function CreatePost() {
     }
   };
 
+  useEffect(() => {
+    setTitleCnt(title.length);
+  }, [title]);
+
+  useEffect(() => {
+    setContentCnt(content.length);
+  }, [content]);
+
   return (
     <CreatePostBlock>
       <form onSubmit={handleSubmit}>
@@ -169,7 +179,7 @@ function CreatePost() {
             placeholder='게시글 제목을 입력해주세요'
           />
         </div>
-        <div className='charCnt'>0/40</div>
+        <div className='charCnt'>{titleCnt}/40</div>
 
         <div className='textareaBox'>
           <div className='inputTitle'>내용</div>
@@ -180,7 +190,7 @@ function CreatePost() {
             onChange={handleInputs}
           />
         </div>
-        <div className='charCnt'>0/100</div>
+        <div className='charCnt'>{contentCnt}/100</div>
 
         <div className='CreatePostBtnGroup'>
           <button>
