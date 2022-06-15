@@ -1,7 +1,8 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import HeaderBtn from './HeaderBtn';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
   background-color: white;
@@ -47,12 +48,44 @@ const HeaderBlock = styled.div`
 `;
 
 function Header() {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+
+  const handleInput = e => {
+    setQuery(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    try {
+      const callApi = async () => {
+        const res = await axios.post(
+          'http://localhost:5000/market/search/product/' + query
+        );
+      };
+      callApi();
+      //성공하면 해당 url로 이동
+      navigate('/market', {
+        state: { query },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <HeaderBlock>
       <NavLink to='/' className='logo'>
         영숙마켓
       </NavLink>
-      <input className='search' placeholder='상품명을 입력하세요'></input>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          className='search'
+          placeholder='상품명을 입력하세요'
+          name='query'
+          onChange={handleInput}
+        ></input>
+      </form>
       <HeaderBtn />
     </HeaderBlock>
   );

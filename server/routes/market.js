@@ -1,6 +1,7 @@
 const express = require('express');
 const { Product, User, Category } = require('../models/index');
 const multer = require('multer');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -100,7 +101,6 @@ router.get('/category', async (req, res, next) => {
 
 router.post('/create', upload.single('image'), async (req, res, next) => {
   try {
-    console.log('유저', req.user);
     const { title, cat_id, price, descript } = req.body;
     await Product.create({
       title,
@@ -114,6 +114,40 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
     return res.send('게시글이 작성되었습니다.');
   } catch (err) {
     next(err);
+  }
+});
+
+router.route('/search/product/:postInfo').post(async (req, res) => {
+  try {
+    const query = req.params.postInfo;
+    const products = await Product.findAll({
+      where: {
+        title: {
+          [Op.like]: '%' + query + '%',
+        },
+      },
+    });
+    const result = [];
+    for (const p of products) {
+      // const imageId = p.image;
+      // const image = await Image.findOne({
+      //   attributes: ['filename'],
+      //   where: { id: imageId },
+      // });
+
+      result.push({
+        p_id: p.p_id,
+        descript: p.descript,
+        price: p.price,
+        regdate: p.regdate,
+        image: p.image,
+        title: p.title,
+        cat_id: p.cat_id,
+      });
+    }
+    return res.json(result);
+  } catch (err) {
+    console.error(err);
   }
 });
 

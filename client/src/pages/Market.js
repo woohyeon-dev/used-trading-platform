@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Category, ProductList, Pagination } from '../components';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const MarketBlock = styled.div`
   width: 954px;
@@ -10,6 +10,7 @@ const MarketBlock = styled.div`
 `;
 
 function Market() {
+  const { state } = useLocation();
   const pagePer = 20;
   // const pagePer = 1;
   const [prods, setProds] = useState([]);
@@ -37,19 +38,44 @@ function Market() {
     setCurrentPage(e);
   };
 
+  // useEffect(() => {
+  //   const callApi = async () => {
+  //     const res = await axios.get('http://localhost:5000/market/product', {
+  //       params: { cat_id: category },
+  //     });
+  //     setProds(res.data);
+  //   };
+  //   try {
+  //     callApi();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [category]);
+
   useEffect(() => {
-    const callApi = async () => {
-      const res = await axios.get('http://localhost:5000/market/product', {
-        params: { cat_id: category },
-      });
-      setProds(res.data);
-    };
-    try {
+    if (!state || state === undefined || state === null) {
+      const callApi = async () => {
+        const res = await axios.get('http://localhost:5000/market/product', {
+          params: { cat_id: category },
+        });
+        console.log(res.data);
+        setProds(res.data);
+      };
+      try {
+        callApi();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      const callApi = async () => {
+        const res = await axios.post(
+          'http://localhost:5000/market/search/product/' + state.query
+        );
+        setProds(res.data);
+      };
       callApi();
-    } catch (error) {
-      console.log(error);
     }
-  }, [category]);
+  }, [category, state]);
 
   return (
     <MarketBlock>
