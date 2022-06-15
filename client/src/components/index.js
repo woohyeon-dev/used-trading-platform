@@ -11,6 +11,8 @@ import ProductList from './main/market/ProductList';
 import Member from './main/group/Member';
 import MemberCreate from './main/group/MemberCreate';
 import MemberUpdateModal from './main/group/MemberUpdateModal';
+import ReplyCreate from './main/semester/ReplyCreate';
+import ReplyList from './main/semester/ReplyList';
 import NextPageInput from './register/NextPageInput';
 import PrevPageInput from './register/PrevPageInput';
 
@@ -27,6 +29,8 @@ export {
   ProductList,
   Member,
   MemberCreate,
+  ReplyCreate,
+  ReplyList,
   MemberUpdateModal,
   NextPageInput,
   PrevPageInput,

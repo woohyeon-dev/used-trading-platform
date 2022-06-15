@@ -18,6 +18,7 @@ const boardRouter = require('./routes/board');
 const marketRouter = require('./routes/market');
 const authRouter = require('./routes/auth');
 const groupRouter = require('./routes/group');
+const semesterRouter = require('./routes/semester');
 
 const app = express();
 app.set('port', process.env.PORT || 5000); // 포트 설정
@@ -79,6 +80,7 @@ app.use('/board', boardRouter);
 app.use('/market', marketRouter);
 app.use('/auth', authRouter);
 app.use('/group', groupRouter);
+app.use('/semester', semesterRouter);
 
 // 404 error middleware
 app.use((req, res, next) => {
