@@ -52,11 +52,12 @@ router.get('/', async (req, res, next) => {
 router.post('/create', upload.single('image'), async (req, res, next) => {
   try {
     const { name, mb_tell, introduction } = req.body;
+    const image = `http://localhost:5000/img/${req.file.filename}`;
     await Team_member.create({
       // mb_id 자동 생성
       name,
       mb_tell,
-      image: req.file.filename,
+      image: image,
       introduction,
     });
     return res.status(201).send('추가되었습니다.');
@@ -70,12 +71,13 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
 router.put('/update', upload.single('image'), async (req, res, next) => {
   try {
     const { name, mb_tell, introduction } = req.body;
+    const image = `http://localhost:5000/img/${req.file.filename}`;
     await Team_member.update(
       {
         // mb_id 자동 생성
         name,
         mb_tell,
-        image: req.file.filename,
+        image: image,
         introduction,
       },
       {

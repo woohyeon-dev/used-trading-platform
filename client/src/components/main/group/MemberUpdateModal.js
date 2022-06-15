@@ -210,6 +210,8 @@ function MemberUpdateModal({ selectId, setVisible }) {
         formData
       );
       console.log(res.data);
+      setUpdateInfo({ name: '', mb_tell: '', introduction: '' });
+      setUpdateImage({ image: '', preview: '' });
       setVisible(e);
     };
     try {

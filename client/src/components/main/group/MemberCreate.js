@@ -47,6 +47,10 @@ const MemberCreateBlock = styled.div`
     background-color: #495057;
     margin: 0 10px;
     color: white;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .cancelBtn {
@@ -57,6 +61,10 @@ const MemberCreateBlock = styled.div`
     border: 1px solid black;
     color: white;
     background-color: #ff5050;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .infoInput {
@@ -89,6 +97,10 @@ const MemberCreateBlock = styled.div`
     font-size: 15px;
     border: 1px solid black;
     margin-left: 220px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 

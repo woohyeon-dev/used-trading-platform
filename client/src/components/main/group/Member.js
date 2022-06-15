@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
-import defaultImage from '../../../image/default.png';
 import { MemberCreate } from '../..';
 
 const MemberBlock = styled.div`
@@ -79,6 +78,10 @@ const MemberBox = styled.div`
     line-height: 39px;
     border: 1px solid black;
     text-align: center;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .updateBtn {
@@ -112,7 +115,7 @@ function Member({ members, setVisible, setSelectId }) {
         members.map((member, index) => (
           <MemberBox key={index} member={member}>
             <div className='memberImgBox'>
-              <img alt='' src={defaultImage} className='memberImg' />
+              <img alt='' src={member.image} className='memberImg' />
             </div>
             <div className='memberInfoBox'>
               <div className='memberName'>{member.name}</div>
