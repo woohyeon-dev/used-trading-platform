@@ -6,54 +6,37 @@ import ReplyCreate from './ReplyCreate';
 const ReplyListBlock = styled.div`
   .total {
     margin: 20px 0 20px 5px;
-    font-size: 23px;
-    font-weight: bold;
+    font-size: 20px;
   }
 `;
 
 const Reply = styled.div`
-  background-color: lightgrey;
-  padding: 10px 10px 0 10px;
-  border: 2px solid black;
-  font-size: 16px;
-  margin-bottom: 20px;
-
-  .replyBox {
-    display: grid;
-    grid-template-columns: 1fr 7fr 2fr;
-    grid-template-rows: 30px 30px;
-    grid-gap: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f3f3f3;
-    color: black;
-    border: 2px solid black;
-  }
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  grid-gap: 15px;
+  padding: 15px 10px;
+  border: 1px solid lightgrey;
+  margin: 15px 0;
 
   .replyInfo {
-    letter-spacing: 2px;
-  }
-
-  .replyId {
-    grid-row: 1 / span 2;
-    line-height: 80px;
-    text-align: center;
+    font-size: 18px;
   }
 
   .nickname {
-    padding-left: 10px;
-    line-height: 30px;
     font-weight: bold;
     font-size: 14px;
-    border-bottom: 1px solid black;
+    height: 20px;
+    line-height: 20px;
   }
 
   .content {
-    line-height: 30px;
+    height: 20px;
+    line-height: 20px;
   }
 
   .time {
     text-align: right;
+    font-size: 15px;
     color: grey;
   }
 `;
@@ -66,14 +49,11 @@ function ReplyList({ replies, reader }) {
       {replies.length > 0 &&
         replies.map((reply, index) => (
           <Reply key={index}>
-            <div className='replyBox'>
-              <div className='replyId replyInfo'>{reply.reply_id}</div>
-              <div className='nickname replyInfo'>{reply.nickname}</div>
-              <div className='time replyInfo'>
-                {timeForToday(reply.regdate)}
-              </div>
-              <div className='content replyInfo'>{reply.content}</div>
+            <div className='nickname replyInfo'>
+              {reply.nickname} ({reply.user_id})
             </div>
+            <div className='time replyInfo'>{timeForToday(reply.regdate)}</div>
+            <div className='content replyInfo'>{reply.content}</div>
           </Reply>
         ))}
     </ReplyListBlock>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { ProductList, BoardList } from '../components';
+import callApi from '../utils/callApi';
 
 const HomeBlock = styled.div`
   .advertisement {
@@ -43,14 +43,9 @@ function Home() {
   const [recentProds, setRecentProds] = useState([{}]);
 
   useEffect(() => {
-    const callApi = async () => {
-      const res1 = await axios.get('http://localhost:5000/home/board');
-      const res2 = await axios.get('http://localhost:5000/home/product');
-      setRecentPosts(res1.data);
-      setRecentProds(res2.data);
-    };
     try {
-      callApi();
+      callApi('get', '/home/board', {}, setRecentPosts);
+      callApi('get', '/home/product', {}, setRecentProds);
     } catch (error) {
       console.error(error);
     }
@@ -58,8 +53,12 @@ function Home() {
 
   return (
     <HomeBlock>
-      <NavLink to='/semester' className='advertisement'>
-        현지학기제 광고
+      <NavLink to='/semester'>
+        <img
+          src={`${process.env.REACT_APP_URL}/img/japan.png`}
+          alt='japan'
+          className='advertisement'
+        ></img>
       </NavLink>
       <div className='homeContent'>
         <NavLink to='/market' className='title'>

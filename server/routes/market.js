@@ -6,7 +6,6 @@ const { Op } = require('sequelize');
 const router = express.Router();
 
 // multer 옵션
-// hdd에 저장
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     // 저장위치 설정
@@ -99,27 +98,9 @@ router.get('/category', async (req, res, next) => {
   }
 });
 
-router.post('/create', upload.single('image'), async (req, res, next) => {
+router.get('/search/product', async (req, res) => {
   try {
-    const { title, cat_id, price, descript } = req.body;
-    await Product.create({
-      title,
-      cat_id,
-      price,
-      descript,
-      image: req.file.filename,
-      writer: req.user,
-      // p_id 자동
-    });
-    return res.send('게시글이 작성되었습니다.');
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.route('/search/product/:postInfo').post(async (req, res) => {
-  try {
-    const query = req.params.postInfo;
+    const query = req.query.state;
     const products = await Product.findAll({
       where: {
         title: {
@@ -129,12 +110,6 @@ router.route('/search/product/:postInfo').post(async (req, res) => {
     });
     const result = [];
     for (const p of products) {
-      // const imageId = p.image;
-      // const image = await Image.findOne({
-      //   attributes: ['filename'],
-      //   where: { id: imageId },
-      // });
-
       result.push({
         p_id: p.p_id,
         descript: p.descript,
@@ -148,6 +123,28 @@ router.route('/search/product/:postInfo').post(async (req, res) => {
     return res.json(result);
   } catch (err) {
     console.error(err);
+  }
+});
+
+router.post('/create', upload.single('image'), async (req, res, next) => {
+  try {
+    const { title, cat_id, price, descript } = req.body;
+    if (req.user) {
+      await Product.create({
+        title,
+        cat_id,
+        price,
+        descript,
+        image: req.file.filename,
+        writer: req.user,
+        // p_id 자동
+      });
+      return res.json({ msg: '게시글이 작성되었습니다.' });
+    } else {
+      return res.json({ msg: '로그인 후 이용해주세요' });
+    }
+  } catch (err) {
+    next(err);
   }
 });
 

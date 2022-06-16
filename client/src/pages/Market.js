@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Category, ProductList, Pagination } from '../components';
-import axios from 'axios';
 import { useLocation, useParams } from 'react-router-dom';
+import callApi from '../utils/callApi';
 
 const MarketBlock = styled.div`
   width: 954px;
@@ -11,8 +11,8 @@ const MarketBlock = styled.div`
 
 function Market() {
   const { state } = useLocation();
+
   const pagePer = 20;
-  // const pagePer = 1;
   const [prods, setProds] = useState([]);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(pagePer);
@@ -38,42 +38,25 @@ function Market() {
     setCurrentPage(e);
   };
 
-  // useEffect(() => {
-  //   const callApi = async () => {
-  //     const res = await axios.get('http://localhost:5000/market/product', {
-  //       params: { cat_id: category },
-  //     });
-  //     setProds(res.data);
-  //   };
-  //   try {
-  //     callApi();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [category]);
-
   useEffect(() => {
-    if (!state || state === undefined || state === null) {
-      const callApi = async () => {
-        const res = await axios.get('http://localhost:5000/market/product', {
-          params: { cat_id: category },
-        });
-        console.log(res.data);
-        setProds(res.data);
-      };
-      try {
-        callApi();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      const callApi = async () => {
-        const res = await axios.post(
-          'http://localhost:5000/market/search/product/' + state.query
+    try {
+      if (!state || state === undefined || state === null) {
+        callApi(
+          'get',
+          '/market/product',
+          { params: { cat_id: category } },
+          setProds
         );
-        setProds(res.data);
-      };
-      callApi();
+      } else {
+        callApi(
+          'get',
+          '/market/search/product',
+          { params: { state: state.query } },
+          setProds
+        );
+      }
+    } catch (error) {
+      console.error(error);
     }
   }, [category, state]);
 

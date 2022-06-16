@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Context from '../context/Context';
+import callApi from '../utils/callApi';
 
 const CreatePostBlock = styled.div`
   width: 984px;
@@ -137,16 +137,8 @@ function CreatePost() {
   const handleSubmit = e => {
     e.preventDefault();
     if (loggedIn) {
-      const callApi = async () => {
-        const res = await axios.post(
-          'http://localhost:5000/board/create',
-          inputs,
-          { withCredentials: true }
-        );
-        console.log(res.data);
-      };
       try {
-        callApi();
+        callApi('post', '/board/create', inputs, null, alert);
         navigate('/board'); //성공하면 해당 url로 이동
       } catch (error) {
         console.error(error);

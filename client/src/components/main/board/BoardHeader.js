@@ -52,7 +52,7 @@ const BoardHeaderBlk = styled.div`
 function BoardHeader({ handleSearch, goBoard }) {
   const navigate = useNavigate();
   const { loggedIn } = useContext(Context);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState({});
 
   const handleInput = e => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출

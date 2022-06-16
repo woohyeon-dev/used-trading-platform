@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    margin: 0;
   }
 
   body {
@@ -37,11 +38,9 @@ function App() {
   const { setLoggedIn } = useContext(Context);
   useEffect(() => {
     const callApi = async () => {
-      const user = await axios.post(
-        'http://localhost:5000/auth/user',
-        {},
-        { withCredentials: true }
-      );
+      const user = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
+        withCredentials: true,
+      });
       if (user.data.user) {
         setLoggedIn(true);
       } else {

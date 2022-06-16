@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import HeaderBtn from './HeaderBtn';
 import { NavLink, useNavigate } from 'react-router-dom';
+import callApi from '../utils/callApi';
 
 const HeaderBlock = styled.div`
   background-color: white;
@@ -58,19 +58,14 @@ function Header() {
   const handleSubmit = e => {
     e.preventDefault();
     try {
-      const callApi = async () => {
-        const res = await axios.post(
-          'http://localhost:5000/market/search/product/' + query
-        );
-      };
-      callApi();
-      //성공하면 해당 url로 이동
-      navigate('/market', {
-        state: { query },
-      });
+      callApi('get', '/market/search/product', query);
     } catch (error) {
       console.error(error);
     }
+    //성공하면 해당 url로 이동
+    navigate('/market', {
+      state: { query },
+    });
   };
   return (
     <HeaderBlock>

@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Context from '../context/Context';
+import callApi from '../utils/callApi';
 
 const LoginBlock = styled.div`
   height: 100vh;
@@ -115,20 +115,15 @@ function Login() {
     });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        'http://localhost:5000/auth/login',
-        loginInfo,
-        { withCredentials: true }
-      );
-      console.log(res.data);
+      callApi('post', '/auth/login', loginInfo, null, alert);
       setLoggedIn(true);
       //성공하면 해당 url로 이동
       navigate('/');
     } catch (error) {
-      alert(error.response.data);
+      console.error(error);
     }
   };
 

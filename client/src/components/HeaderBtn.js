@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Context from '../context/Context';
-import axios from 'axios';
+import callApi from '../utils/callApi';
 
 const HeaderBtnBlock = styled.div`
   .profile {
@@ -37,20 +37,14 @@ const HeaderBtnBlock = styled.div`
 
 function HeaderBtn() {
   const navigate = useNavigate();
-
   const { loggedIn, setLoggedIn } = useContext(Context);
 
-  const handleLogout = async e => {
+  const handleLogout = e => {
     try {
-      const logout = await axios.post(
-        'http://localhost:5000/auth/logout',
-        {},
-        { withCredentials: true }
-      );
-      alert(logout.data);
+      callApi('post', '/auth/logout', null, null, alert);
       setLoggedIn(false);
     } catch (error) {
-      alert(error.response.data);
+      console.error(error);
     }
   };
 

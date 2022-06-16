@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import defaultImage from '../image/default.png';
+import callApi from '../utils/callApi';
 
 const CreateProductBlock = styled.div`
   width: 984px;
@@ -160,7 +160,6 @@ function CreateProduct() {
   //url 이동을 위한 useNavigate
   const navigate = useNavigate();
   const imageInput = useRef();
-
   const selectList = [
     '생활용품',
     '전자기기',
@@ -223,20 +222,12 @@ function CreateProduct() {
   const handleSubmit = e => {
     e.preventDefault();
     try {
-      const callApi = async () => {
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('descript', descript);
-        formData.append('price', price);
-        formData.append('image', image.image_file);
-        const res = await axios.post(
-          'http://localhost:5000/market/create',
-          formData,
-          { withCredentials: true }
-        );
-        alert(res.data);
-      };
-      callApi();
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('descript', descript);
+      formData.append('price', price);
+      formData.append('image', image.image_file);
+      callApi('post', '/market/create', formData, null, alert);
       //성공하면 해당 url로 이동
       navigate('/market');
     } catch (error) {

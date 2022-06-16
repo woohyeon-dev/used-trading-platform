@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import callApi from '../../../utils/callApi';
 
 const MemberUpdateModalBlock = styled.div`
   width: 100%;
@@ -204,21 +204,14 @@ function MemberUpdateModal({ selectId, setVisible }) {
     formData.append('mb_tell', mb_tell);
     formData.append('introduction', introduction);
     formData.append('image', updateImage.image);
-    const callApi = async () => {
-      const res = await axios.put(
-        'http://localhost:5000/group/update',
-        formData
-      );
-      console.log(res.data);
-      setUpdateInfo({ name: '', mb_tell: '', introduction: '' });
-      setUpdateImage({ image: '', preview: '' });
-      setVisible(e);
-    };
     try {
-      callApi();
+      callApi('put', '/group/update', formData);
     } catch (error) {
       console.error(error);
     }
+    setUpdateInfo({ name: '', mb_tell: '', introduction: '' });
+    setUpdateImage({ image: '', preview: '' });
+    setVisible(e);
   };
 
   const handleCancel = e => {

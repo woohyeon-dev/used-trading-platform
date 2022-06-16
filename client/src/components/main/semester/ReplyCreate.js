@@ -1,10 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Context from '../../../context/Context';
+import callApi from '../../../utils/callApi';
 
 const ReplyCreateBlock = styled.div`
   textarea {
-    border: 2px solid black;
+    border: 1px solid lightgrey;
     color: black;
     padding: 10px;
     letter-spacing: 2px;
@@ -33,37 +35,36 @@ const ReplyCreateBlock = styled.div`
   }
 
   .inputNum {
-    margin-top: 5px;
-    margin-left: 3px;
-    font-weight: bold;
+    margin-top: 7px;
+    margin-left: 8px;
     font-size: 20px;
   }
 `;
 
 function ReplyCreate() {
-  const [content, setContent] = useState('');
+  const [createData, setCreateData] = useState({ content: '' });
   const [inputNum, setInputNum] = useState(0);
+  const { loggedIn } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
-    const callApi = async () => {
-      const res = await axios.post(
-        'http://localhost:5000/semester/create',
-        { content },
-        { withCredentials: true }
-      );
-      console.log(res.data);
-    };
+    if (!loggedIn) {
+      // 로그인 유저가 아닐 경우
+      alert('로그인이 필요합니다.');
+      return navigate('/login');
+    }
     try {
-      callApi();
+      callApi('post', '/semester/create', createData);
     } catch (error) {
       console.error(error);
     }
+    navigate('/semester');
   };
 
   useEffect(() => {
-    setInputNum(content.length);
-  }, [content]);
+    setInputNum(createData.content.length);
+  }, [createData.content]);
 
   return (
     <ReplyCreateBlock>
@@ -71,8 +72,8 @@ function ReplyCreate() {
         <textarea
           name='content'
           placeholder='후기를 남겨주세요'
-          value={content}
-          onChange={e => setContent(e.target.value)}
+          value={createData.content}
+          onChange={e => setCreateData({ content: e.target.value })}
           required
         />
         <div className='buttonGroup'>

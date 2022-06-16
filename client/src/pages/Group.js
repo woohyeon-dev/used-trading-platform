@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Member, MemberUpdateModal } from '../components';
+import callApi from '../utils/callApi';
 
 const GroupBlock = styled.div`
   width: 1008px;
@@ -14,12 +14,8 @@ function Group() {
   const [selectId, setSelectId] = useState();
 
   useEffect(() => {
-    const callApi = async () => {
-      const res = await axios.get('http://localhost:5000/group');
-      setMembers(res.data);
-    };
     try {
-      callApi();
+      callApi('get', '/group', {}, setMembers);
     } catch (error) {
       console.error(error);
     }

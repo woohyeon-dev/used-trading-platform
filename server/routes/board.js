@@ -37,10 +37,9 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.route('/search').post(async (req, res) => {
+router.get('/search', async (req, res) => {
   try {
-    console.log(req.body);
-    const query = req.body.query;
+    const query = req.query.query;
     const result = await Board.findAll({
       where: {
         title: {
@@ -57,13 +56,16 @@ router.route('/search').post(async (req, res) => {
 
 router.post('/create', async (req, res, next) => {
   try {
-    await Board.create({
-      title: req.body.title,
-      content: req.body.content,
-      writer: req.user,
-    });
-
-    return res.status(201).send('게시글이 등록되었습니다.');
+    if (req.user) {
+      await Board.create({
+        title: req.body.title,
+        content: req.body.content,
+        writer: req.user,
+      });
+      return res.status(201).json({ msg: '게시글이 등록되었습니다.' });
+    } else {
+      return res.json({ msg: '로그인 후 이용해 주세요' });
+    }
   } catch (err) {
     next(err);
   }

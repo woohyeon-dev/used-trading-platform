@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import callApi from '../../../utils/callApi';
 
 const MemberCreateBlock = styled.div`
   .createForm {
@@ -166,15 +166,8 @@ function MemberCreate() {
     formData.append('mb_tell', mb_tell);
     formData.append('introduction', introduction);
     formData.append('image', image.image);
-    const callApi = async () => {
-      const res = await axios.post(
-        'http://localhost:5000/group/create',
-        formData
-      );
-      console.log(res.data);
-    };
     try {
-      callApi();
+      callApi('post', '/group/create', formData);
     } catch (error) {
       console.error(error);
     }

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { BoardHeader, BoardList, Pagination } from '../components';
-import getData from '../utils/getData';
+import callApi from '../utils/callApi';
 
 const BoardBlock = styled.div`
   margin: 40px 20px;
@@ -22,9 +21,9 @@ function Board() {
 
   const goBoard = () => {
     try {
-      getData(process.env.REACT_APP_URL, '/board', setPosts);
+      callApi('get', '/board', {}, setPosts);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -34,11 +33,7 @@ function Board() {
 
   const handleSearch = e => {
     try {
-      const callApi = async () => {
-        const res = await axios.post('http://localhost:5000/board/search', e);
-        setPosts(res.data);
-      };
-      callApi();
+      callApi('get', '/board/search', { params: e }, setPosts);
     } catch (error) {
       console.error(error);
     }
@@ -46,7 +41,7 @@ function Board() {
 
   useEffect(() => {
     try {
-      getData(process.env.REACT_APP_URL, '/board', setPosts);
+      callApi('get', '/board', {}, setPosts);
     } catch (error) {
       console.log(error);
     }

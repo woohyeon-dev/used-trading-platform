@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import NextPageInput from '../components/register/NextPageInput';
 import PrevPageInput from '../components/register/PrevPageInput';
+import callApi from '../utils/callApi';
 
 const RegisterBlock = styled.div`
   height: 100vh;
@@ -77,18 +77,18 @@ function Register() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (name.length !== 0 && nickname.length !== 0 && phone_num.length !== 0) {
-      try {
-        const res = await axios.post(
-          'http://localhost:5000/auth/register',
-          registerInfo
-        );
-        console.log(res.data);
+    try {
+      if (
+        name.length !== 0 &&
+        nickname.length !== 0 &&
+        phone_num.length !== 0
+      ) {
+        callApi('post', '/auth/register', registerInfo, null, alert);
         //성공하면 해당 url로 이동
         navigate('/');
-      } catch (error) {
-        alert(error.response.data);
       }
+    } catch (error) {
+      console.error(error);
     }
   };
 

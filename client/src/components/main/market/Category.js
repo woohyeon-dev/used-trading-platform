@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import callApi from '../../../utils/callApi';
 
 const CategoryBlock = styled.div`
   width: 954px;
@@ -33,11 +33,11 @@ function Category() {
   const [categories, setCategories] = useState([{}]);
 
   useEffect(() => {
-    const callApi = async () => {
-      const res = await axios.get('http://localhost:5000/market/category');
-      setCategories(res.data);
-    };
-    callApi();
+    try {
+      callApi('get', '/market/category', {}, setCategories);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   return (

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { MdArrowBackIos } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ReplyList } from '../components';
-import getData from '../utils/getData';
+import callApi from '../utils/callApi';
 
 const SemesterBlock = styled.div`
   width: 100%;
-  background-color: white;
+  background-color: #f3f3f3;
 
   .container {
     width: 800px;
@@ -16,6 +15,7 @@ const SemesterBlock = styled.div`
     color: black;
     background-color: #f3f3f3;
     position: relative;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
   }
 
   .backBtn {
@@ -43,13 +43,17 @@ const SemesterBlock = styled.div`
 
   .main {
     padding: 20px 40px;
-    border-bottom: 2px solid black;
   }
 
   p {
     font-size: 18px;
     line-height: 35px;
     letter-spacing: 2px;
+  }
+
+  .line {
+    border-top: 2px solid lightgrey;
+    margin: 0 30px;
   }
 
   .replyContainer {
@@ -59,25 +63,20 @@ const SemesterBlock = styled.div`
 `;
 
 function Semester() {
+  const { createData } = useLocation();
   const [replies, setReplies] = useState([]);
   const [reader, setReader] = useState('');
 
   useEffect(() => {
-    // 댓글 정보들
-    getData(process.env.REACT_APP_URL, '/semester', setReplies);
-    const callApi = async e => {
-      // 사용자 id
-      const res = await axios.get('http://localhost:5000/auth/user', {
-        withCredentials: true,
-      });
-      setReader(res.data);
-    };
     try {
-      callApi();
+      // 댓글 정보들
+      callApi('get', '/semester', {}, setReplies);
+      // 사용자 id
+      callApi('get', '/auth/user', {}, setReader);
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [createData]);
 
   return (
     <SemesterBlock>
@@ -115,6 +114,7 @@ function Semester() {
             있습니다.
           </p>
         </div>
+        <div className='line'></div>
         <div className='replyContainer'>
           <ReplyList replies={replies} reader={reader} />
         </div>

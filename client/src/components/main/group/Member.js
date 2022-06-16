@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import { MemberCreate } from '../..';
+import callApi from '../../../utils/callApi';
 
 const MemberBlock = styled.div`
   width: 100%;
@@ -97,15 +97,11 @@ const MemberBox = styled.div`
 function Member({ members, setVisible, setSelectId }) {
   const handelDeleteMember = e => {
     const mb_id = e.target.id;
-    const callApi = async e => {
-      const res = await axios.delete('http://localhost:5000/group/delete', {
-        params: { mb_id },
-      });
-      console.log(res.data);
-    };
     try {
-      callApi();
-    } catch (error) {}
+      callApi('delete', '/group/delete', { params: { mb_id } });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
