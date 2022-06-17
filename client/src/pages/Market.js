@@ -7,6 +7,23 @@ import callApi from '../utils/callApi';
 const MarketBlock = styled.div`
   width: 954px;
   margin: 40px auto;
+
+  .listTitle {
+    font-size: 20px;
+    margin: 40px 0 20px 10px;
+    text-align: bottom;
+  }
+
+  .value {
+    font-weight: bold;
+  }
+
+  .count {
+    font-family: 'YES24';
+    font-size: 15px;
+    color: silver;
+    letter-spacing: 0.5px;
+  }
 `;
 
 function Market() {
@@ -73,6 +90,26 @@ function Market() {
   return (
     <MarketBlock>
       <Category categories={categories} />
+      {state ? (
+        <div className='listTitle'>
+          <span className='value'>'{state.query}'</span>에 대한 검색결과 &nbsp;
+          <span className='count'>{prods.length}개</span>
+        </div>
+      ) : selectedCatId ? (
+        <div className='listTitle'>
+          <span className='value'>
+            {categories[selectedCatId - 1].cat_name}
+          </span>
+          &nbsp;&nbsp;
+          <span className='count'>{prods.length}개</span>
+        </div>
+      ) : (
+        <div className='listTitle'>
+          <span className='value'>전체 상품</span>
+          &nbsp;&nbsp;
+          <span className='count'>{prods.length}개</span>
+        </div>
+      )}
       <ProductList prods={prods.slice(start, end)} />
       <Pagination
         pagePer={pagePer}
