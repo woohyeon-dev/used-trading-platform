@@ -58,7 +58,7 @@ function Header() {
   const handleSubmit = e => {
     e.preventDefault();
     try {
-      callApi('get', '/market/search/product', query);
+      callApi('get', '/market/product', query);
     } catch (error) {
       console.error(error);
     }
@@ -66,6 +66,7 @@ function Header() {
     navigate('/market', {
       state: { query },
     });
+    setQuery('');
   };
   return (
     <HeaderBlock>
@@ -78,6 +79,7 @@ function Header() {
           className='search'
           placeholder='상품명을 입력하세요'
           name='query'
+          value={query}
           onChange={handleInput}
         ></input>
       </form>

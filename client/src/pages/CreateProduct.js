@@ -160,20 +160,10 @@ function CreateProduct() {
   //url 이동을 위한 useNavigate
   const navigate = useNavigate();
   const imageInput = useRef();
-  const selectList = [
-    '생활용품',
-    '전자기기',
-    '문구',
-    '식품',
-    '도서',
-    '의류/악세서리',
-    '뷰티/미용',
-    '스포츠용품',
-    '기타',
-  ];
+  const [categories, setCategories] = useState([{}]);
   const [postInfo, setPostInfo] = useState({
     title: '',
-    category: '1',
+    cat_id: '1',
     price: '',
     descript: '',
   });
@@ -184,7 +174,7 @@ function CreateProduct() {
   const [titleCnt, setTitleCnt] = useState(0);
   const [descriptCnt, setDescriptCnt] = useState(0);
 
-  const { title, descript, price } = postInfo;
+  const { title, descript, cat_id, price } = postInfo;
 
   const handleInputs = e => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -193,6 +183,14 @@ function CreateProduct() {
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
+
+  useEffect(() => {
+    try {
+      callApi('get', '/market/category', null, setCategories);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   useEffect(() => {
     setTitleCnt(title.length);
@@ -225,11 +223,12 @@ function CreateProduct() {
       const formData = new FormData();
       formData.append('title', title);
       formData.append('descript', descript);
+      formData.append('cat_id', cat_id);
       formData.append('price', price);
       formData.append('image', image.image_file);
       callApi('post', '/market/create', formData, null, alert);
       //성공하면 해당 url로 이동
-      navigate('/market');
+      return navigate('/market');
     } catch (error) {
       console.error(error);
     }
@@ -281,9 +280,9 @@ function CreateProduct() {
         <div className='inputBox'>
           <div className='inputTitle'>카테고리</div>
           <select name='category' onChange={handleInputs}>
-            {selectList.map((item, index) => (
+            {categories.map((category, index) => (
               <option value={index + 1} key={index}>
-                {item}
+                {category.cat_name}
               </option>
             ))}
           </select>

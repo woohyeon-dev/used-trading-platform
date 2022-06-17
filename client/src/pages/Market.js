@@ -17,17 +17,18 @@ function Market() {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(pagePer);
   const [currentPage, setCurrentPage] = useState(1);
+  const [categories, setCategories] = useState([{}]);
 
-  const [category, setCategory] = useState(0);
+  const [selectedCatId, setSelectedCatId] = useState();
   const params = useParams();
 
   // 전체 게시물 개수
   const totalProdsCnt = prods.length;
 
   useEffect(() => {
-    setCategory(params.cat_id ? params.cat_id : 0);
+    setSelectedCatId(params.cat_id);
     setCurrentPage(1);
-  }, [category, params]);
+  }, [selectedCatId, params]);
 
   useEffect(() => {
     setStart((currentPage - 1) * pagePer);
@@ -40,29 +41,38 @@ function Market() {
 
   useEffect(() => {
     try {
-      if (!state || state === undefined || state === null) {
+      if (state) {
         callApi(
           'get',
           '/market/product',
-          { params: { cat_id: category } },
+          { params: { state: state.query } },
           setProds
         );
       } else {
         callApi(
           'get',
-          '/market/search/product',
-          { params: { state: state.query } },
+          '/market/product',
+          { params: { cat_id: selectedCatId } },
           setProds
         );
       }
     } catch (error) {
       console.error(error);
     }
-  }, [category, state]);
+  }, [selectedCatId, state]);
+
+  useEffect(() => {
+    try {
+      callApi('get', '/market/category', null, setCategories);
+      callApi('get', '/market/product', {}, setProds);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   return (
     <MarketBlock>
-      <Category />
+      <Category categories={categories} />
       <ProductList prods={prods.slice(start, end)} />
       <Pagination
         pagePer={pagePer}

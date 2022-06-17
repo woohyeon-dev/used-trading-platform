@@ -29,9 +29,13 @@ const upload = multer({
 
 router.get('/product', async (req, res, next) => {
   try {
-    let catId = req.query.cat_id;
+    const catId = req.query.cat_id;
+    let searchWord = req.query.state;
+    if (!searchWord) {
+      searchWord = '';
+    }
     let products;
-    if (catId == 0) {
+    if (catId) {
       products = await Product.findAll({
         attributes: {
           exclude: ['writer'],
@@ -42,6 +46,9 @@ router.get('/product', async (req, res, next) => {
             attributes: ['nickname'],
           },
         ],
+        where: {
+          cat_id: catId,
+        },
         order: [['p_id', 'desc']],
       });
     } else {
@@ -55,7 +62,11 @@ router.get('/product', async (req, res, next) => {
             attributes: ['nickname'],
           },
         ],
-        where: { cat_id: catId },
+        where: {
+          title: {
+            [Op.like]: '%' + searchWord + '%',
+          },
+        },
         order: [['p_id', 'desc']],
       });
     }
@@ -82,7 +93,9 @@ router.get('/product', async (req, res, next) => {
 
 router.get('/category', async (req, res, next) => {
   try {
-    const categories = await Category.findAll({});
+    const categories = await Category.findAll({
+      order: [['cat_id']],
+    });
     const result = [];
     for (const c of categories) {
       result.push({
@@ -98,34 +111,6 @@ router.get('/category', async (req, res, next) => {
   }
 });
 
-router.get('/search/product', async (req, res) => {
-  try {
-    const query = req.query.state;
-    const products = await Product.findAll({
-      where: {
-        title: {
-          [Op.like]: '%' + query + '%',
-        },
-      },
-    });
-    const result = [];
-    for (const p of products) {
-      result.push({
-        p_id: p.p_id,
-        descript: p.descript,
-        price: p.price,
-        regdate: p.regdate,
-        image: p.image,
-        title: p.title,
-        cat_id: p.cat_id,
-      });
-    }
-    return res.json(result);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
 router.post('/create', upload.single('image'), async (req, res, next) => {
   try {
     const { title, cat_id, price, descript } = req.body;
@@ -135,7 +120,7 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
         cat_id,
         price,
         descript,
-        image: req.file.filename,
+        image: 'http://localhost:5000/img/' + req.file.filename,
         writer: req.user,
         // p_id 자동
       });

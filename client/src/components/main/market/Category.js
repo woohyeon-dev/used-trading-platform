@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import callApi from '../../../utils/callApi';
 
 const CategoryBlock = styled.div`
   width: 954px;
@@ -29,17 +28,7 @@ const CategoryBlock = styled.div`
   }
 `;
 
-function Category() {
-  const [categories, setCategories] = useState([{}]);
-
-  useEffect(() => {
-    try {
-      callApi('get', '/market/category', {}, setCategories);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
+function Category({ categories }) {
   return (
     <CategoryBlock>
       <NavLink to='/market' key={0} className='categoryBtn'>
