@@ -16,10 +16,8 @@ const callApi = async (requestType, router, data, setData) => {
     } else {
       alert(res?.data);
     }
-    return true;
   } catch (err) {
     alert(err.response.data);
-    return false;
   }
 };
 

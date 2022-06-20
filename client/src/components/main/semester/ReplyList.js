@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Context from '../../../context/Context';
+import callApi from '../../../utils/callApi';
 import timeForToday from '../../../utils/timeForToday';
 import ReplyCreate from './ReplyCreate';
 
@@ -55,6 +56,14 @@ const Reply = styled.div`
 
 function ReplyList({ replies }) {
   const { loggedUser } = useContext(Context);
+
+  const handleEditBtn = e => {};
+
+  const handleDeleteBtn = e => {
+    const reply_id = e.target.id;
+    callApi('delete', '/semester/delete', { params: { reply_id } });
+  };
+
   return (
     <ReplyListBlock>
       <ReplyCreate />
@@ -69,8 +78,16 @@ function ReplyList({ replies }) {
             <div className='content replyInfo'>{reply.content}</div>
             {loggedUser.id === reply.writer && (
               <div className='buttonGroup'>
-                <div className='button'>수정</div>
-                <div className='button deleteBtn'>삭제</div>
+                <div id={reply.reply_id} onClick={handleEditBtn}>
+                  수정
+                </div>
+                <div
+                  className=' deleteBtn'
+                  id={reply.reply_id}
+                  onClick={handleDeleteBtn}
+                >
+                  삭제
+                </div>
               </div>
             )}
           </Reply>

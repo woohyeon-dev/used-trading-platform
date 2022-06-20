@@ -50,7 +50,7 @@ function App() {
           setLoggedIn(false);
         }
       } catch (error) {
-        alert(error);
+        console.error(error);
       }
     };
     callApi();

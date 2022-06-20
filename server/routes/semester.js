@@ -66,7 +66,7 @@ router.patch('/update', async (req, res, next) => {
 router.delete('/delete', async (req, res) => {
   try {
     await Jap_reply.destroy({
-      where: { reply_id: req.body.reply_id },
+      where: { reply_id: req.query.reply_id },
     });
     return res.send('삭제 완료!');
   } catch (err) {

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import callApi from '../utils/callApi';
 import Context from '../context/Context';
+import axios from 'axios';
 
 const LoginBlock = styled.div`
   height: 100vh;
@@ -93,20 +93,20 @@ const LoginBlock = styled.div`
 `;
 
 function Login() {
-  // 글로벌 전역 상태값 setLoggedIn를 받아옴
-  const { setLoggedIn } = useContext(Context);
+  // 글로벌 전역 상태값 setLoggedIn, setLoggedUser를 받아옴
+  const { setLoggedIn, setLoggedUser } = useContext(Context);
 
-  //url 이동을 위한 useNavigate
+  // url 이동을 위한 useNavigate
   const navigate = useNavigate();
 
-  //input에서 입력한 아이디와 비밀번호 정보를 담기위한 state
+  // input에서 입력한 아이디와 비밀번호 정보를 담기위한 state
   const [loginInfo, setLoginInfo] = useState({
     user_id: '',
     password: '',
   });
   const { user_id, password } = loginInfo;
 
-  //input에 입력하면 자동적으로 loginInfo state값 변경
+  // input에 입력하면 자동적으로 loginInfo state값 변경
   const handleChange = e => {
     const { name, value } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setLoginInfo({
@@ -115,13 +115,28 @@ function Login() {
     });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const res = await callApi('post', '/auth/login', loginInfo);
-    if (res) {
-      setLoggedIn(true);
-      navigate('/');
-    }
+    const callApi = async e => {
+      try {
+        const res1 = await axios.post(
+          `${process.env.REACT_APP_URL}/auth/login`,
+          loginInfo,
+          { withCredentials: true }
+        );
+        alert(res1.data);
+        setLoggedIn(true);
+        navigate('/');
+
+        const res2 = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
+          withCredentials: true,
+        });
+        setLoggedUser(res2.data);
+      } catch (err) {
+        alert(err.response.data);
+      }
+    };
+    callApi();
   };
 
   return (

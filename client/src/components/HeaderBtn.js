@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Context from '../context/Context';
-import callApi from '../utils/callApi';
+import axios from 'axios';
 
 const HeaderBtnBlock = styled.div`
   .profile {
@@ -36,14 +36,32 @@ const HeaderBtnBlock = styled.div`
 `;
 
 function HeaderBtn() {
+  // url 이동을 위한 useNavigate
   const navigate = useNavigate();
-  const { loggedIn, setLoggedIn } = useContext(Context);
+
+  // 글로벌 전역 상태값 loggedIn, setLoggedIn, setLoggedUser를 받아옴
+  const { loggedIn, setLoggedIn, setLoggedUser } = useContext(Context);
 
   const handleLogout = async e => {
-    const res = callApi('post', '/auth/logout', {});
-    if (res) {
-      setLoggedIn(false);
-    }
+    const callApi = async e => {
+      try {
+        const res1 = await axios.post(
+          `${process.env.REACT_APP_URL}/auth/logout`,
+          {},
+          { withCredentials: true }
+        );
+        setLoggedIn(false);
+        alert(res1.data);
+
+        const res2 = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
+          withCredentials: true,
+        });
+        setLoggedUser(res2.data);
+      } catch (error) {
+        alert(error.response.data);
+      }
+    };
+    callApi();
   };
 
   const handleSellBtn = async e => {
