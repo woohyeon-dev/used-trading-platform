@@ -49,7 +49,7 @@ router.post('/create', async (req, res, next) => {
 });
 
 // PATCH
-router.patch('/update', async (req, res, next) => {
+router.put('/update', async (req, res, next) => {
   try {
     await Jap_reply.update(
       { content: req.body.content },

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Context from '../../../context/Context';
 import callApi from '../../../utils/callApi';
 import timeForToday from '../../../utils/timeForToday';
-import ReplyCreate from './ReplyCreate';
+import { ReplyCreate, ReplyUpdate } from './../../index';
 
 const ReplyListBlock = styled.div`
   .total {
@@ -56,8 +56,12 @@ const Reply = styled.div`
 
 function ReplyList({ replies }) {
   const { loggedUser } = useContext(Context);
+  const [editReplyId, setEditReplyId] = useState('');
 
-  const handleEditBtn = e => {};
+  const handleEditBtn = e => {
+    const reply_id = e.target.id;
+    setEditReplyId(reply_id);
+  };
 
   const handleDeleteBtn = e => {
     const reply_id = e.target.id;
@@ -70,27 +74,37 @@ function ReplyList({ replies }) {
       <div className='total'>총 댓글 수: {replies.length}</div>
       {replies.length > 0 &&
         replies.map((reply, index) => (
-          <Reply key={index}>
-            <div className='nickname replyInfo'>
-              {reply.nickname} ({reply.user_id})
-            </div>
-            <div className='time replyInfo'>{timeForToday(reply.regdate)}</div>
-            <div className='content replyInfo'>{reply.content}</div>
-            {loggedUser.id === reply.writer && (
-              <div className='buttonGroup'>
-                <div id={reply.reply_id} onClick={handleEditBtn}>
-                  수정
-                </div>
-                <div
-                  className=' deleteBtn'
-                  id={reply.reply_id}
-                  onClick={handleDeleteBtn}
-                >
-                  삭제
-                </div>
+          <div key={index}>
+            <Reply>
+              <div className='nickname replyInfo'>
+                {reply.nickname} ({reply.user_id})
               </div>
+              <div className='time replyInfo'>
+                {timeForToday(reply.regdate)}
+              </div>
+              <div className='content replyInfo'>{reply.content}</div>
+              {loggedUser.id === reply.writer && (
+                <div className='buttonGroup'>
+                  <div id={reply.reply_id} onClick={handleEditBtn}>
+                    수정
+                  </div>
+                  <div
+                    className=' deleteBtn'
+                    id={reply.reply_id}
+                    onClick={handleDeleteBtn}
+                  >
+                    삭제
+                  </div>
+                </div>
+              )}
+            </Reply>
+            {editReplyId === `${reply.reply_id}` && (
+              <ReplyUpdate
+                replyId={reply.reply_id}
+                beforeContent={reply.content}
+              />
             )}
-          </Reply>
+          </div>
         ))}
     </ReplyListBlock>
   );
