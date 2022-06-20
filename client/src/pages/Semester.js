@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdArrowBackIos } from 'react-icons/md';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ReplyList } from '../components';
 import callApi from '../utils/callApi';
 
@@ -63,16 +63,12 @@ const SemesterBlock = styled.div`
 `;
 
 function Semester() {
-  const { createData } = useLocation();
   const [replies, setReplies] = useState([]);
-  const [reader, setReader] = useState('');
 
   useEffect(() => {
     // 댓글 정보들
     callApi('get', '/semester', {}, setReplies);
-    // 사용자 id
-    callApi('get', '/auth/user', {}, setReader);
-  }, [createData]);
+  }, []);
 
   return (
     <SemesterBlock>
@@ -112,7 +108,7 @@ function Semester() {
         </div>
         <div className='line'></div>
         <div className='replyContainer'>
-          <ReplyList replies={replies} reader={reader} />
+          <ReplyList replies={replies} />
         </div>
       </div>
     </SemesterBlock>

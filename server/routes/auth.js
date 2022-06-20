@@ -102,9 +102,9 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
 
 router.get('/user', (req, res, next) => {
   if (req.user) {
-    return res.status(200).json({ user: req.user });
+    return res.status(200).json({ id: req.user });
   }
-  return res.json({ user: '' });
+  return res.json({ id: '' });
 });
 
 module.exports = router;

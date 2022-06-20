@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import Context from '../../../context/Context';
 import timeForToday from '../../../utils/timeForToday';
 import ReplyCreate from './ReplyCreate';
 
@@ -11,40 +12,52 @@ const ReplyListBlock = styled.div`
 `;
 
 const Reply = styled.div`
+  padding: 15px;
+  margin: 15px 0;
+  border: 1px solid lightgrey;
   display: grid;
   grid-template-columns: 7fr 1fr;
-  grid-gap: 15px;
-  padding: 15px 10px;
-  border: 1px solid lightgrey;
-  margin: 15px 0;
+  grid-gap: 10px;
 
   .replyInfo {
-    font-size: 18px;
+    font-size: 15px;
   }
 
   .nickname {
     font-weight: bold;
-    font-size: 14px;
-    height: 20px;
-    line-height: 20px;
   }
 
   .content {
-    height: 20px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 30px;
+    grid-column: 1 / span 2;
   }
 
   .time {
     text-align: right;
-    font-size: 15px;
     color: grey;
+  }
+
+  .buttonGroup {
+    grid-column: 2 / span 1;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    font-size: 16px;
+    color: grey;
+  }
+
+  .deleteBtn {
+    margin-left: 10px;
+    color: #b71d1d;
   }
 `;
 
-function ReplyList({ replies, reader }) {
+function ReplyList({ replies }) {
+  const { loggedUser } = useContext(Context);
   return (
     <ReplyListBlock>
-      <ReplyCreate reader={reader} />
+      <ReplyCreate />
       <div className='total'>총 댓글 수: {replies.length}</div>
       {replies.length > 0 &&
         replies.map((reply, index) => (
@@ -54,6 +67,12 @@ function ReplyList({ replies, reader }) {
             </div>
             <div className='time replyInfo'>{timeForToday(reply.regdate)}</div>
             <div className='content replyInfo'>{reply.content}</div>
+            {loggedUser.id === reply.writer && (
+              <div className='buttonGroup'>
+                <div className='button'>수정</div>
+                <div className='button deleteBtn'>삭제</div>
+              </div>
+            )}
           </Reply>
         ))}
     </ReplyListBlock>

@@ -35,25 +35,26 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const { setLoggedIn } = useContext(Context);
+  const { setLoggedIn, setLoggedUser } = useContext(Context);
   useEffect(() => {
     const callApi = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
-        withCredentials: true,
-      });
-      if (res.data.user) {
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
+          withCredentials: true,
+        });
+        if (res.data.id) {
+          setLoggedUser({ id: res.data.id });
+          setLoggedIn(true);
+        } else {
+          setLoggedUser({});
+          setLoggedIn(false);
+        }
+      } catch (error) {
+        alert(error);
       }
     };
-
-    try {
-      callApi();
-    } catch (error) {
-      alert(error);
-    }
-  }, [setLoggedIn]);
+    callApi();
+  }, [setLoggedUser, setLoggedIn]);
 
   return (
     <>
