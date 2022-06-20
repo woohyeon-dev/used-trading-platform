@@ -40,7 +40,16 @@ router.get('/', async (req, res, next) => {
 router.get('/search', async (req, res) => {
   try {
     const query = req.query.query;
-    const result = await Board.findAll({
+    const boards = await Board.findAll({
+      attributes: {
+        exclude: ['writer'],
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['nickname'],
+        },
+      ],
       where: {
         title: {
           [Op.like]: '%' + query + '%',
@@ -48,6 +57,18 @@ router.get('/search', async (req, res) => {
       },
       order: [['post_id', 'desc']],
     });
+    const result = [];
+    for (const b of boards) {
+      result.push({
+        post_id: b.post_id,
+        content: b.content,
+        regdate: b.regdate,
+        title: b.title,
+        views: b.views,
+        recommends: b.recommends,
+        nickname: b.User.nickname,
+      });
+    }
     return res.json(result);
   } catch (err) {
     next(err);
