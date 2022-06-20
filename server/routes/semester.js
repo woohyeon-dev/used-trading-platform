@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const replies = await Jap_reply.findAll({
-      attributes: ['reply_id', 'regdate', 'content'],
+      attributes: ['reply_id', 'writer', 'regdate', 'content'],
       include: [
         {
           model: User,
@@ -20,6 +20,7 @@ router.get('/', async (req, res, next) => {
     for (const reply of replies) {
       result.push({
         reply_id: reply.reply_id,
+        writer: reply.writer,
         user_id: reply.User.user_id,
         nickname: reply.User.nickname,
         regdate: reply.regdate,
@@ -35,35 +36,13 @@ router.get('/', async (req, res, next) => {
 // POST
 router.post('/create', async (req, res, next) => {
   try {
-    if (req.user) {
-      await Jap_reply.create({
-        // id는 자동 생성
-        writer: req.user,
-        content: req.body.content,
-        // regdate는 자동생성
-      });
-      const reply = await Jap_reply.findOne({
-        attributes: ['reply_id', 'regdate', 'content'],
-        include: [
-          {
-            model: User,
-            attributes: ['user_id', 'nickname'],
-          },
-        ],
-        order: [['reply_id', 'desc']],
-        limit: 1,
-      });
-      const result = {
-        reply_id: reply.reply_id,
-        user_id: reply.user_id,
-        nickname: reply.User.nickname,
-        regdate: reply.regdate,
-        content: reply.content,
-      };
-      return res.json(result);
-    } else {
-      return res.json({});
-    }
+    await Jap_reply.create({
+      // id는 자동 생성
+      writer: req.user,
+      content: req.body.content,
+      // regdate는 자동생성
+    });
+    return res.send('작성 완료!');
   } catch (err) {
     next(err);
   }

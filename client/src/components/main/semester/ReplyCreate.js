@@ -54,11 +54,7 @@ function ReplyCreate() {
       alert('로그인이 필요합니다.');
       return navigate('/login');
     }
-    try {
-      callApi('post', '/semester/create', createData);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('post', '/semester/create', createData);
     navigate('/semester');
   };
 

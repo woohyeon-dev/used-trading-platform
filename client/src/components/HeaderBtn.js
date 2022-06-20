@@ -39,12 +39,10 @@ function HeaderBtn() {
   const navigate = useNavigate();
   const { loggedIn, setLoggedIn } = useContext(Context);
 
-  const handleLogout = e => {
-    try {
-      callApi('post', '/auth/logout', null, null, alert);
+  const handleLogout = async e => {
+    const res = callApi('post', '/auth/logout', {});
+    if (res) {
       setLoggedIn(false);
-    } catch (error) {
-      console.error(error);
     }
   };
 

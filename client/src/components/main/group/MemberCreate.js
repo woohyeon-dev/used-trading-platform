@@ -166,11 +166,7 @@ function MemberCreate() {
     formData.append('mb_tell', mb_tell);
     formData.append('introduction', introduction);
     formData.append('image', image.image);
-    try {
-      callApi('post', '/group/create', formData);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('post', '/group/create', formData);
   };
 
   return (

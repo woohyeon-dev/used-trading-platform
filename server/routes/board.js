@@ -50,22 +50,18 @@ router.get('/search', async (req, res) => {
     });
     return res.json(result);
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 });
 
 router.post('/create', async (req, res, next) => {
   try {
-    if (req.user) {
-      await Board.create({
-        title: req.body.title,
-        content: req.body.content,
-        writer: req.user,
-      });
-      return res.status(201).json({ msg: '게시글이 등록되었습니다.' });
-    } else {
-      return res.json({ msg: '로그인 후 이용해 주세요' });
-    }
+    await Board.create({
+      title: req.body.title,
+      content: req.body.content,
+      writer: req.user,
+    });
+    return res.status(201).send('작성완료!');
   } catch (err) {
     next(err);
   }

@@ -60,7 +60,7 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
       image: image,
       introduction,
     });
-    return res.status(201).send('추가되었습니다.');
+    return res.status(201).send('추가 완료!');
   } catch (err) {
     console.error(err);
     next(err);
@@ -84,7 +84,7 @@ router.put('/update', upload.single('image'), async (req, res, next) => {
         where: { mb_id: req.body.mb_id },
       }
     );
-    return res.send('수정되었습니다.');
+    return res.send('수정 완료!');
   } catch (err) {
     console.error(err);
     next(err);

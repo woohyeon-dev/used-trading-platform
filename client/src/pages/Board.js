@@ -20,11 +20,7 @@ function Board() {
   const totalPostCnt = posts.length;
 
   const goBoard = () => {
-    try {
-      callApi('get', '/board', {}, setPosts);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/board', {}, setPosts);
   };
 
   useEffect(() => {
@@ -32,20 +28,8 @@ function Board() {
   }, []);
 
   const handleSearch = e => {
-    try {
-      callApi('get', '/board/search', { params: e }, setPosts);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/board/search', { params: e }, setPosts);
   };
-
-  useEffect(() => {
-    try {
-      callApi('get', '/board', {}, setPosts);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
 
   useEffect(() => {
     setStart((currentPage - 1) * pagePer);

@@ -14,11 +14,7 @@ function Group() {
   const [selectId, setSelectId] = useState();
 
   useEffect(() => {
-    try {
-      callApi('get', '/group', {}, setMembers);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/group', {}, setMembers);
   }, []);
 
   return (

@@ -204,17 +204,11 @@ function MemberUpdateModal({ selectId, setVisible }) {
     formData.append('mb_tell', mb_tell);
     formData.append('introduction', introduction);
     formData.append('image', updateImage.image);
-    try {
-      callApi('put', '/group/update', formData);
-    } catch (error) {
-      console.error(error);
-    }
-    setUpdateInfo({ name: '', mb_tell: '', introduction: '' });
-    setUpdateImage({ image: '', preview: '' });
-    setVisible(e);
+    callApi('put', '/group/update', formData);
+    resetInput();
   };
 
-  const handleCancel = e => {
+  const resetInput = e => {
     setUpdateInfo({ name: '', mb_tell: '', introduction: '' });
     setUpdateImage({ image: '', preview: '' });
     setVisible(e);
@@ -279,7 +273,7 @@ function MemberUpdateModal({ selectId, setVisible }) {
           <button className='updateSubmitBtn' type='submit'>
             수정
           </button>
-          <div className='updateCancelBtn' onClick={handleCancel}>
+          <div className='updateCancelBtn' onClick={resetInput}>
             취소
           </div>
         </div>

@@ -226,9 +226,9 @@ function CreateProduct() {
       formData.append('cat_id', cat_id);
       formData.append('price', price);
       formData.append('image', image.image_file);
-      callApi('post', '/market/create', formData, null, alert);
+      callApi('post', '/market/create', formData);
       //성공하면 해당 url로 이동
-      return navigate('/market');
+      navigate('/market');
     } catch (error) {
       console.error(error);
     }

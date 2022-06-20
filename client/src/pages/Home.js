@@ -43,12 +43,8 @@ function Home() {
   const [recentProds, setRecentProds] = useState([{}]);
 
   useEffect(() => {
-    try {
-      callApi('get', '/home/board', {}, setRecentPosts);
-      callApi('get', '/home/product', {}, setRecentProds);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/home/board', {}, setRecentPosts);
+    callApi('get', '/home/product', {}, setRecentProds);
   }, []);
 
   return (

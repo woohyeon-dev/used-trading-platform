@@ -1,18 +1,26 @@
 import axios from 'axios';
 
-const callApi = async (requestType, router, data, setData, alert) => {
+const callApi = async (requestType, router, data, setData) => {
   router = router || '';
   data = data || {};
   setData = setData || function () {};
-  alert = alert || function () {};
 
-  const res = await axios[requestType](
-    process.env.REACT_APP_URL + router,
-    data,
-    { withCredentials: true }
-  );
-  setData(res?.data);
-  alert(res?.data.msg);
+  try {
+    const res = await axios[requestType](
+      process.env.REACT_APP_URL + router,
+      data,
+      { withCredentials: true }
+    );
+    if (requestType === 'get') {
+      setData(res?.data);
+    } else {
+      alert(res?.data);
+    }
+    return true;
+  } catch (err) {
+    alert(err.response.data);
+    return false;
+  }
 };
 
 export default callApi;

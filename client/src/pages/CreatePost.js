@@ -136,17 +136,12 @@ function CreatePost() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (loggedIn) {
-      try {
-        callApi('post', '/board/create', inputs, null, alert);
-        navigate('/board'); //성공하면 해당 url로 이동
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
+    if (!loggedIn) {
       alert('로그인 후 이용해주세요');
       navigate('/login');
     }
+    callApi('post', '/board/create', inputs);
+    navigate('/board'); //성공하면 해당 url로 이동
   };
 
   useEffect(() => {

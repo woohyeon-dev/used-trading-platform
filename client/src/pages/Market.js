@@ -79,12 +79,8 @@ function Market() {
   }, [selectedCatId, state]);
 
   useEffect(() => {
-    try {
-      callApi('get', '/market/category', null, setCategories);
-      callApi('get', '/market/product', {}, setProds);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/market/category', {}, setCategories);
+    callApi('get', '/market/product', {}, setProds);
   }, []);
 
   return (

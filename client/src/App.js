@@ -38,10 +38,10 @@ function App() {
   const { setLoggedIn } = useContext(Context);
   useEffect(() => {
     const callApi = async () => {
-      const user = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
+      const res = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
         withCredentials: true,
       });
-      if (user.data.user) {
+      if (res.data.user) {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);

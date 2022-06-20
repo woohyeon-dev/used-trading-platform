@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Context from '../context/Context';
 import callApi from '../utils/callApi';
+import Context from '../context/Context';
 
 const LoginBlock = styled.div`
   height: 100vh;
@@ -93,7 +93,7 @@ const LoginBlock = styled.div`
 `;
 
 function Login() {
-  //글로벌 전역 상태값 loggedUser, loggedIn, setLoggedUser, setLoggedIn를 받아옴
+  // 글로벌 전역 상태값 setLoggedIn를 받아옴
   const { setLoggedIn } = useContext(Context);
 
   //url 이동을 위한 useNavigate
@@ -115,15 +115,12 @@ function Login() {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      callApi('post', '/auth/login', loginInfo, null, alert);
+    const res = await callApi('post', '/auth/login', loginInfo);
+    if (res) {
       setLoggedIn(true);
-      //성공하면 해당 url로 이동
       navigate('/');
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -141,6 +138,7 @@ function Login() {
             name='user_id'
             value={user_id}
             onChange={handleChange}
+            required
           />
           <input
             className='loginInput'
@@ -149,6 +147,7 @@ function Login() {
             name='password'
             value={password}
             onChange={handleChange}
+            required
           />
           <button className='loginBtn' type='submit'>
             로그인

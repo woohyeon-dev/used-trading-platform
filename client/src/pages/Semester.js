@@ -68,14 +68,10 @@ function Semester() {
   const [reader, setReader] = useState('');
 
   useEffect(() => {
-    try {
-      // 댓글 정보들
-      callApi('get', '/semester', {}, setReplies);
-      // 사용자 id
-      callApi('get', '/auth/user', {}, setReader);
-    } catch (error) {
-      console.log(error);
-    }
+    // 댓글 정보들
+    callApi('get', '/semester', {}, setReplies);
+    // 사용자 id
+    callApi('get', '/auth/user', {}, setReader);
   }, [createData]);
 
   return (

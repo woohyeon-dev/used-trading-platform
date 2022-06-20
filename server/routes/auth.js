@@ -27,11 +27,11 @@ router.post('/register', isNotLoggedIn, async (req, res) => {
     if (exUserId) {
       // 아이디 검사 후 아이디가 기존에 있다면?
       // return으로 res(응답)을 한번만 보내도록 한다. 응답 후 router 종료된다.
-      return res.status(403).json({ msg: '이미 사용중인 아이디입니다.' });
+      return res.status(403).send('이미 사용중인 아이디입니다.');
     }
     if (exNickname) {
       // 닉네임 검사 후 닉네임이 기존에 있다면?
-      return res.status(403).json({ msg: '이미 사용중인 닉네임입니다.' });
+      return res.status(403).send('이미 사용중인 닉네임입니다.');
     }
 
     // bcrypt - 비밀번호 해쉬화하기
@@ -48,12 +48,9 @@ router.post('/register', isNotLoggedIn, async (req, res) => {
     });
 
     // 요청에 대한 성공으로 status(201) : 생성이 됐다는 의미 (기재하는게 좋다.)
-    return res
-      .status(201)
-      .json({ msg: '회원가입이 정상적으로 처리되었습니다.' });
+    return res.status(201).send('회원가입이 정상적으로 처리되었습니다.');
   } catch (err) {
-    res.status(500).json({ msg: '서버에서 에러가 발생했습니다.' });
-    next(err); // status(500) - 서버에러
+    next(err);
   }
 });
 
@@ -70,7 +67,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     }
     if (info) {
       // 클라이언트 에러 (비밀번호가 틀렸거나, 계정이 없거나), info.reason에 에러 내용이 있음.
-      return res.status(403).json({ msg: info.reason });
+      return res.status(403).send(info.reason);
     }
     // 아래는 마지막으로 에러를 검사하는 코드다.
     // 성공하면 passport의 serialize가 실행된다.
@@ -79,9 +76,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         console.error(loginErr);
         return next(loginErr);
       }
-      return res
-        .status(200)
-        .json({ msg: '로그인이 정상적으로 처리 되었습니다.' });
+      return res.status(200).send(`${req.user.nickname}님 반갑습니다`);
     });
   })(req, res, next); // 미들웨어 확장에서는 끝에 항상 넣어줘야한다.
 });
@@ -99,18 +94,17 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
     req.user = null;
     req.session.destroy();
     res.clearCookie('connect.sid');
-    return res.json({ msg: '로그아웃이 정상적으로 처리되었습니다.' });
+    return res.status(200).send('로그아웃이 정상적으로 처리되었습니다.');
   } catch (error) {
-    return res.json({ msg: '' });
+    next(error);
   }
 });
 
-router.get('/user', (req, res) => {
+router.get('/user', (req, res, next) => {
   if (req.user) {
     return res.status(200).json({ user: req.user });
-  } else {
-    return res.json({ user: '' });
   }
+  return res.json({ user: '' });
 });
 
 module.exports = router;

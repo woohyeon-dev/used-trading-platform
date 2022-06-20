@@ -77,18 +77,12 @@ function Register() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      if (
-        name.length !== 0 &&
-        nickname.length !== 0 &&
-        phone_num.length !== 0
-      ) {
-        callApi('post', '/auth/register', registerInfo, null, alert);
+    if (name.length !== 0 && nickname.length !== 0 && phone_num.length !== 0) {
+      const res = callApi('post', '/auth/register', registerInfo);
+      if (res) {
         //성공하면 해당 url로 이동
         navigate('/');
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 

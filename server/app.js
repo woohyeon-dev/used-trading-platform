@@ -85,13 +85,13 @@ app.use('/semester', semesterRouter);
 // 404 error middleware
 app.use((req, res, next) => {
   console.log('404 에러');
-  res.status(404).json({ msg: 'Not Found' });
+  res.status(404).send('Not Found');
 });
 
 // error middleware
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.status || 500).json({ msg: err });
+  res.status(err.status || 500).send('서버에서 에러가 발생했습니다.');
 });
 
 app.listen(app.get('port'), () => {

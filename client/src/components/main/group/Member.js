@@ -97,11 +97,7 @@ const MemberBox = styled.div`
 function Member({ members, setVisible, setSelectId }) {
   const handelDeleteMember = e => {
     const mb_id = e.target.id;
-    try {
-      callApi('delete', '/group/delete', { params: { mb_id } });
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('delete', '/group/delete', { params: { mb_id } });
   };
 
   return (
