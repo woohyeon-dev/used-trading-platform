@@ -55,33 +55,27 @@ function Market() {
   const toggleCurrentPage = e => {
     setCurrentPage(e);
   };
-
-  useEffect(() => {
-    try {
-      if (state) {
-        callApi(
-          'get',
-          '/market/product',
-          { params: { state: state.query } },
-          setProds
-        );
-      } else {
-        callApi(
-          'get',
-          '/market/product',
-          { params: { cat_id: selectedCatId } },
-          setProds
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [selectedCatId, state]);
-
   useEffect(() => {
     callApi('get', '/market/category', {}, setCategories);
-    callApi('get', '/market/product', {}, setProds);
   }, []);
+
+  useEffect(() => {
+    if (state) {
+      callApi(
+        'get',
+        '/market/product',
+        { params: { state: state.query } },
+        setProds
+      );
+    } else {
+      callApi(
+        'get',
+        '/market/product',
+        { params: { cat_id: selectedCatId } },
+        setProds
+      );
+    }
+  }, [selectedCatId, state]);
 
   return (
     <MarketBlock>

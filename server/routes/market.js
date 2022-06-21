@@ -124,9 +124,9 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
         writer: req.user,
         // p_id 자동
       });
-      return res.json({ msg: '게시글이 작성되었습니다.' });
+      return res.send('게시글이 작성되었습니다.');
     } else {
-      return res.json({ msg: '로그인 후 이용해주세요' });
+      return res.send('로그인 후 이용해주세요');
     }
   } catch (err) {
     next(err);

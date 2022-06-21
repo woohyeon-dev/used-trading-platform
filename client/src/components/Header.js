@@ -57,11 +57,7 @@ function Header() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    try {
-      callApi('get', '/market/product', query);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/market/product', query);
     //성공하면 해당 url로 이동
     navigate('/market', {
       state: { query },
