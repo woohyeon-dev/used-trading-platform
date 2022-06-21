@@ -13,14 +13,15 @@ const ReplyListBlock = styled.div`
 `;
 
 const Reply = styled.div`
-  padding: 15px;
+  padding: 15px 18px;
   margin: 15px 0;
   border: 1px solid lightgrey;
   display: grid;
   grid-template-columns: 7fr 1fr;
-  grid-gap: 10px;
+  grid-gap: 5px;
 
   .replyInfo {
+    line-height: 30px;
     font-size: 15px;
   }
 
@@ -30,7 +31,6 @@ const Reply = styled.div`
 
   .content {
     font-size: 17px;
-    line-height: 30px;
     grid-column: 1 / span 2;
   }
 
@@ -48,13 +48,20 @@ const Reply = styled.div`
     color: grey;
   }
 
+  .button {
+    line-height: 30px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .deleteBtn {
     margin-left: 10px;
     color: #b71d1d;
   }
 `;
 
-function ReplyList({ replies }) {
+function ReplyList({ replies, setUpdate }) {
   const { loggedUser } = useContext(Context);
   const [editReplyId, setEditReplyId] = useState('');
 
@@ -63,14 +70,16 @@ function ReplyList({ replies }) {
     setEditReplyId(reply_id);
   };
 
-  const handleDeleteBtn = e => {
+  const handleDeleteBtn = async e => {
     const reply_id = e.target.id;
-    callApi('delete', '/semester/delete', { params: { reply_id } });
+    setUpdate(true);
+    await callApi('delete', '/semester/delete', { params: { reply_id } });
+    setUpdate(false);
   };
 
   return (
     <ReplyListBlock>
-      <ReplyCreate />
+      <ReplyCreate setUpdate={setUpdate} />
       <div className='total'>총 댓글 수: {replies.length}</div>
       {replies.length > 0 &&
         replies.map((reply, index) => (
@@ -85,11 +94,15 @@ function ReplyList({ replies }) {
               <div className='content replyInfo'>{reply.content}</div>
               {loggedUser.id === reply.writer && (
                 <div className='buttonGroup'>
-                  <div id={reply.reply_id} onClick={handleEditBtn}>
+                  <div
+                    className='button'
+                    id={reply.reply_id}
+                    onClick={handleEditBtn}
+                  >
                     수정
                   </div>
                   <div
-                    className=' deleteBtn'
+                    className='button deleteBtn'
                     id={reply.reply_id}
                     onClick={handleDeleteBtn}
                   >
@@ -102,6 +115,8 @@ function ReplyList({ replies }) {
               <ReplyUpdate
                 replyId={reply.reply_id}
                 beforeContent={reply.content}
+                setEditReplyId={setEditReplyId}
+                setUpdate={setUpdate}
               />
             )}
           </div>

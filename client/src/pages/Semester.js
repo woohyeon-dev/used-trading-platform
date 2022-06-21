@@ -64,11 +64,11 @@ const SemesterBlock = styled.div`
 
 function Semester() {
   const [replies, setReplies] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    // 댓글 정보들
     callApi('get', '/semester', {}, setReplies);
-  }, []);
+  }, [update]);
 
   return (
     <SemesterBlock>
@@ -108,7 +108,7 @@ function Semester() {
         </div>
         <div className='line'></div>
         <div className='replyContainer'>
-          <ReplyList replies={replies} />
+          <ReplyList replies={replies} setUpdate={setUpdate} />
         </div>
       </div>
     </SemesterBlock>

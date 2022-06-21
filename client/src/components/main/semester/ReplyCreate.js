@@ -30,8 +30,19 @@ const ReplyCreateBlock = styled.div`
 
   button {
     margin-top: 5px;
-    padding: 5px;
-    font-size: 16px;
+    padding: 7px;
+    font-size: 18px;
+    border: 1px solid silver;
+    border-radius: 4px;
+    color: black;
+    font-family: 'GyeonggiBatang';
+    background-color: #f3f3f3;
+
+    &:hover {
+      cursor: pointer;
+      background-color: silver;
+      transform: scale(0.97);
+    }
   }
 
   .inputNum {
@@ -41,21 +52,33 @@ const ReplyCreateBlock = styled.div`
   }
 `;
 
-function ReplyCreate() {
+function ReplyCreate({ setUpdate }) {
   const [createData, setCreateData] = useState({ content: '' });
   const [inputNum, setInputNum] = useState(0);
   const { loggedIn } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+
     if (!loggedIn) {
       // 로그인 유저가 아닐 경우
       alert('로그인이 필요합니다.');
       return navigate('/login');
     }
-    callApi('post', '/semester/create', createData);
-    navigate('/semester');
+    setUpdate(true);
+    await callApi('post', '/semester/create', createData);
+    setUpdate(false);
+    setCreateData({ content: '' });
+    // window.location.reload();
+    // navigate('/semester');
+  };
+
+  const handleTextarea = e => {
+    const { value, name } = e.target;
+    if (value.length <= 50) {
+      setCreateData({ ...createData, [name]: value });
+    }
   };
 
   useEffect(() => {
@@ -69,7 +92,7 @@ function ReplyCreate() {
           name='content'
           placeholder='후기를 남겨주세요'
           value={createData.content}
-          onChange={e => setCreateData({ content: e.target.value })}
+          onChange={handleTextarea}
           required
         />
         <div className='buttonGroup'>

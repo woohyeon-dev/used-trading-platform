@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Context from '../../../context/Context';
 import callApi from '../../../utils/callApi';
 
 const ReplyUpdateBlock = styled.div`
@@ -52,7 +51,8 @@ const ReplyUpdateBlock = styled.div`
   }
 `;
 
-function ReplyUpdate({ replyId, beforeContent }) {
+function ReplyUpdate({ replyId, beforeContent, setEditReplyId, setUpdate }) {
+  const navigate = useNavigate();
   const [updateData, setUpdateData] = useState({
     reply_id: replyId,
     content: beforeContent,
@@ -66,9 +66,13 @@ function ReplyUpdate({ replyId, beforeContent }) {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    callApi('put', '/semester/update', updateData);
+    setUpdate(true);
+    await callApi('put', '/semester/update', updateData);
+    setUpdate(false);
+    setEditReplyId('');
+    navigate('/semester');
   };
 
   useEffect(() => {
