@@ -78,7 +78,7 @@ router.get('/product', async (req, res, next) => {
         descript: p.descript,
         price: p.price,
         regdate: p.regdate,
-        image: p.image,
+        image: `http://localhost:5000/img/${p.image}`,
         title: p.title,
         nickname: p.User.nickname,
         cat_id: p.cat_id,
@@ -120,7 +120,7 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
         cat_id,
         price,
         descript,
-        image: 'http://localhost:5000/img/' + req.file.filename,
+        image: req.file.filename,
         writer: req.user,
         // p_id 자동
       });
