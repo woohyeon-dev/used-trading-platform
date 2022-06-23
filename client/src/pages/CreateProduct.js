@@ -176,6 +176,7 @@ function CreateProduct() {
 
   const { title, descript, cat_id, price } = postInfo;
 
+  // input에 입력하면 자동적으로 setPostInfo값 변경
   const handleInputs = e => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setPostInfo({
@@ -279,7 +280,7 @@ function CreateProduct() {
         {/* 카테고리 */}
         <div className='inputBox'>
           <div className='inputTitle'>카테고리</div>
-          <select name='category' onChange={handleInputs}>
+          <select name='cat_id' onChange={handleInputs}>
             {categories.map((category, index) => (
               <option value={index + 1} key={index}>
                 {category.cat_name}
