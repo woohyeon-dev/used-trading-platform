@@ -126,12 +126,12 @@ function Login() {
         );
         alert(res1.data);
         setLoggedIn(true);
-        navigate('/');
 
         const res2 = await axios.get(`${process.env.REACT_APP_URL}/auth/user`, {
           withCredentials: true,
         });
         setLoggedUser(res2.data);
+        navigate('/');
       } catch (err) {
         alert(err.response.data);
       }
