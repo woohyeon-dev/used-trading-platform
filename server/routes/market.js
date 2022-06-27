@@ -1,7 +1,7 @@
 const express = require('express');
 const { Product, User, Category } = require('../models/index');
 const { Op } = require('sequelize');
-const { upload } = require('./upload');
+const { upload } = require('../utils/upload');
 
 const router = express.Router();
 

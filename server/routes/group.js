@@ -1,6 +1,6 @@
 const express = require('express');
 const { Team_member } = require('../models/index');
-const { upload } = require('./upload');
+const { upload } = require('../utils/upload');
 
 const router = express.Router();
 
