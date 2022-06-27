@@ -179,6 +179,11 @@ function CreateProduct() {
   // input에 입력하면 자동적으로 setPostInfo값 변경
   const handleInputs = e => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    if (value.length > 40 && name === 'title') {
+      return;
+    } else if (value.length > 100 && name === 'descript') {
+      return;
+    }
     setPostInfo({
       ...postInfo, // 기존의 input 객체를 복사한 뒤
       [name]: value, // name 키를 가진 값을 value 로 설정
@@ -186,11 +191,7 @@ function CreateProduct() {
   };
 
   useEffect(() => {
-    try {
-      callApi('get', '/market/category', null, setCategories);
-    } catch (error) {
-      console.error(error);
-    }
+    callApi('get', '/market/category', null, setCategories);
   }, []);
 
   useEffect(() => {
