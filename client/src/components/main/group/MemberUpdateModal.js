@@ -20,11 +20,11 @@ const MemberUpdateModalBlock = styled.div`
     left: 0;
     right: 0;
     margin: auto;
-    width: 500px;
-    height: 500px;
+    width: 460px;
+    height: 485px;
     z-index: 100;
     box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
-    padding: 30px;
+    padding: 20px;
     background-color: #dfdfde;
   }
 
@@ -52,11 +52,9 @@ const MemberUpdateModalBlock = styled.div`
     background-color: white;
     font-size: 17px;
     font-family: 'GyeonggiBatang';
-    border-radius: 3px;
   }
 
   .imageUploadBtn {
-    border-radius: 3px;
     width: 90px;
     height: 40px;
     text-align: center;
@@ -76,11 +74,9 @@ const MemberUpdateModalBlock = styled.div`
     margin-left: 10px;
     color: white;
     background-color: #ff5050;
-    border-radius: 3px;
   }
 
   .infoInput {
-    border-radius: 3px;
     font-family: 'GyeonggiBatang';
     font-size: 17px;
     border: 1px solid black;
@@ -95,7 +91,6 @@ const MemberUpdateModalBlock = styled.div`
   }
 
   textarea {
-    border-radius: 3px;
     display: block;
     resize: none;
     padding: 13px;
@@ -118,7 +113,6 @@ const MemberUpdateModalBlock = styled.div`
 
   .updateSubmitBtn {
     display: block;
-    border-radius: 3px;
     width: 60px;
     height: 40px;
     background-color: #4aa02c;
@@ -134,7 +128,6 @@ const MemberUpdateModalBlock = styled.div`
     line-height: 40px;
     margin-left: 10px;
     text-align: center;
-    border-radius: 3px;
     background-color: grey;
     color: white;
     border: 1px solid black;

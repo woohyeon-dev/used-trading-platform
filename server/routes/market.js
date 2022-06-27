@@ -64,7 +64,6 @@ router.get('/product', async (req, res, next) => {
     }
     return res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -84,7 +83,6 @@ router.get('/category', async (req, res, next) => {
     }
     return res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });

@@ -57,7 +57,6 @@ router.put('/update', async (req, res, next) => {
     );
     return res.send('수정 완료!');
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -70,7 +69,6 @@ router.delete('/delete', async (req, res) => {
     });
     return res.send('삭제 완료!');
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });

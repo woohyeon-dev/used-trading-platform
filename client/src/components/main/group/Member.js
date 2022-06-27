@@ -96,13 +96,12 @@ const MemberBox = styled.div`
 
 function Member({ members, setVisible, setSelectId }) {
   const handelDeleteMember = e => {
-    const mb_id = e.target.id;
-    callApi('delete', '/group/delete', { params: { mb_id } });
+    const { mb_id, image } = members[e.target.id];
+    callApi('delete', '/group/delete', { params: { mb_id, image } });
   };
 
   return (
     <MemberBlock>
-      <MemberCreate></MemberCreate>
       {members.length > 0 &&
         members.map((member, index) => (
           <MemberBox key={index} member={member}>
@@ -127,7 +126,7 @@ function Member({ members, setVisible, setSelectId }) {
               </div>
               <div
                 className='memberBtn deleteBtn'
-                id={member.mb_id}
+                id={index}
                 onClick={handelDeleteMember}
               >
                 삭제
@@ -135,6 +134,7 @@ function Member({ members, setVisible, setSelectId }) {
             </div>
           </MemberBox>
         ))}
+      <MemberCreate />
     </MemberBlock>
   );
 }

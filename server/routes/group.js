@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const { Team_member } = require('../models/index');
 const { upload } = require('../utils/upload');
 
@@ -20,7 +21,6 @@ router.get('/', async (req, res, next) => {
     }
     return res.json(result);
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -39,7 +39,6 @@ router.post('/create', upload.single('image'), async (req, res, next) => {
     });
     return res.status(201).send('추가 완료!');
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
@@ -63,22 +62,26 @@ router.put('/update', upload.single('image'), async (req, res, next) => {
     );
     return res.send('수정 완료!');
   } catch (err) {
-    console.error(err);
     next(err);
   }
 });
 
 // DELETE
 router.delete('/delete', async (req, res) => {
-  try {
-    await Team_member.destroy({
-      where: { mb_id: req.query.mb_id },
-    });
-    return res.send('삭제 완료!');
-  } catch (err) {
-    console.error(err);
-    next(err);
+  const fileName = req.query.image.replace('http://localhost:5000/img', '');
+  if (fs.existsSync('public' + fileName)) {
+    // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+    try {
+      fs.unlinkSync('public' + fileName);
+      console.log('이미지 파일 삭제 성공');
+      await Team_member.destroy({
+        where: { mb_id: req.query.mb_id },
+      });
+    } catch (err) {
+      next(err);
+    }
   }
+  return res.send('삭제 완료!');
 });
 
 module.exports = router;
