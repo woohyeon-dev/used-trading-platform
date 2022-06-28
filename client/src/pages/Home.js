@@ -61,13 +61,13 @@ function Home() {
           최근 등록 상품
         </NavLink>
         <div className='titleBox'>
-          <ProductList prods={recentProds} />
+          <ProductList prods={recentProds} currentPage={1} />
         </div>
         <NavLink to='/board' className='title'>
           최근 등록 게시물
         </NavLink>
         <div className='titleBox'>
-          <BoardList posts={recentPosts} />
+          <BoardList posts={recentPosts} currentPage={1} />
         </div>
       </div>
     </HomeBlock>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
@@ -36,15 +36,15 @@ function Category({ categories }) {
       </NavLink>
       {categories.map((category, index) => (
         <NavLink
-          to={`/market/categories/${category.cat_id}`}
+          to={`/market/categories/${index + 1}`}
           key={index}
           className='categoryBtn'
         >
-          {category.cat_name}
+          {category}
         </NavLink>
       ))}
     </CategoryBlock>
   );
 }
 
-export default Category;
+export default memo(Category);

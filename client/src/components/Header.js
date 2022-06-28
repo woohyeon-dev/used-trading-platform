@@ -49,21 +49,22 @@ const HeaderBlock = styled.div`
 
 function Header() {
   const navigate = useNavigate();
-  const [query, setQuery] = useState('');
+  const [searchWord, setSearchWord] = useState('');
 
   const handleInput = e => {
-    setQuery(e.target.value);
+    setSearchWord(e.target.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    callApi('get', '/market/product', query);
+    callApi('get', '/market/product', searchWord);
     //성공하면 해당 url로 이동
     navigate('/market', {
-      state: { query },
+      state: { searchWord },
     });
-    setQuery('');
+    setSearchWord('');
   };
+
   return (
     <HeaderBlock>
       <NavLink to='/' className='logo'>
@@ -74,8 +75,8 @@ function Header() {
           type='text'
           className='search'
           placeholder='상품명을 입력하세요'
-          name='query'
-          value={query}
+          name='searchWord'
+          value={searchWord}
           onChange={handleInput}
         ></input>
       </form>

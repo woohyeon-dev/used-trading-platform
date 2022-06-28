@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Context from '../../../context/Context';
@@ -52,18 +52,18 @@ const BoardHeaderBlk = styled.div`
 function BoardHeader({ handleSearch, goBoard }) {
   const navigate = useNavigate();
   const { loggedIn } = useContext(Context);
-  const [query, setQuery] = useState({});
+  const [searchWord, setSearchWord] = useState({});
 
   const handleInput = e => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setQuery({
+    setSearchWord({
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    handleSearch(query);
+    handleSearch(searchWord);
   };
 
   const handleCreateBtn = () => {
@@ -91,7 +91,7 @@ function BoardHeader({ handleSearch, goBoard }) {
         <div
           className='searchBtn boardBtn'
           onClick={() => {
-            handleSearch(query);
+            handleSearch(searchWord);
           }}
         >
           검색
@@ -112,4 +112,4 @@ function BoardHeader({ handleSearch, goBoard }) {
   );
 }
 
-export default BoardHeader;
+export default memo(BoardHeader);

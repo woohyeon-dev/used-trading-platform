@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import callApi from '../../../utils/callApi';
 
@@ -232,4 +232,4 @@ function MemberCreate() {
   );
 }
 
-export default MemberCreate;
+export default memo(MemberCreate);

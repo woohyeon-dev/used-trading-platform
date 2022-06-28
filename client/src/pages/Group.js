@@ -24,14 +24,14 @@ function Group() {
         setSelectId={e => {
           setSelectId(e);
         }}
-        setVisible={e => {
+        setVisible={() => {
           setVisible(!visible);
         }}
       />
       {visible && (
         <MemberUpdateModal
           selectId={selectId}
-          setVisible={e => {
+          setVisible={() => {
             setVisible(!visible);
           }}
         />

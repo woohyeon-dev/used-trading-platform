@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import pagePer from '../../../utils/pagePer';
 
 const BoardListBlk = styled.div`
   table {
@@ -30,7 +31,15 @@ const BoardListBlk = styled.div`
   }
 `;
 
-function BoardList({ posts }) {
+function BoardList({ posts, currentPage }) {
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(pagePer);
+
+  useEffect(() => {
+    setStart((currentPage - 1) * pagePer);
+    setEnd(currentPage * pagePer);
+  }, [currentPage]);
+
   return (
     <BoardListBlk>
       <table>
@@ -46,7 +55,7 @@ function BoardList({ posts }) {
         </thead>
         <tbody>
           {posts.length > 0 &&
-            posts.map((post, index) => (
+            posts.slice(start, end).map((post, index) => (
               <tr key={index}>
                 <td style={{ width: '10%' }}>{post.post_id}</td>
                 <td style={{ width: '40%' }}>

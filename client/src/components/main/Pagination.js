@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import pagePer from '../../utils/pagePer';
 
 const PaginationBlk = styled.div`
   width: 984px;
@@ -26,7 +27,7 @@ const PaginationBlk = styled.div`
   }
 `;
 
-function Pagination({ pagePer, totalPostCnt, currentPage, toggleCurrentPage }) {
+function Pagination({ totalPostCnt, currentPage, setCurrentPage }) {
   const [currentGroup, setCurrentGroup] = useState(0);
   // 페이지 번호 그룹 크기
   const pageGroupSize = 10;
@@ -68,7 +69,7 @@ function Pagination({ pagePer, totalPostCnt, currentPage, toggleCurrentPage }) {
             key={num}
             className={`pageButton`}
             onClick={() => {
-              toggleCurrentPage(num);
+              setCurrentPage(num);
             }}
           >
             {num}
@@ -88,4 +89,4 @@ function Pagination({ pagePer, totalPostCnt, currentPage, toggleCurrentPage }) {
   );
 }
 
-export default Pagination;
+export default memo(Pagination);

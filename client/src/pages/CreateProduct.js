@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import defaultImage from '../image/default.png';
 import callApi from '../utils/callApi';
+import categories from '../utils/categories';
 
 const CreateProductBlock = styled.div`
   width: 984px;
@@ -160,7 +161,6 @@ function CreateProduct() {
   //url 이동을 위한 useNavigate
   const navigate = useNavigate();
   const imageInput = useRef();
-  const [categories, setCategories] = useState([{}]);
   const [postInfo, setPostInfo] = useState({
     title: '',
     cat_id: '1',
@@ -191,10 +191,6 @@ function CreateProduct() {
   };
 
   useEffect(() => {
-    callApi('get', '/market/category', null, setCategories);
-  }, []);
-
-  useEffect(() => {
     setTitleCnt(title.length);
   }, [title]);
 
@@ -202,7 +198,7 @@ function CreateProduct() {
     setDescriptCnt(descript.length);
   }, [descript]);
 
-  const onClickImageUpload = e => {
+  const onClickImageUpload = () => {
     imageInput.current.click();
   };
 
@@ -284,7 +280,7 @@ function CreateProduct() {
           <select name='cat_id' onChange={handleInputs}>
             {categories.map((category, index) => (
               <option value={index + 1} key={index}>
-                {category.cat_name}
+                {category}
               </option>
             ))}
           </select>

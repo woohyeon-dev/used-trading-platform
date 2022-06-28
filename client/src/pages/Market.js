@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Category, ProductList, Pagination } from '../components';
 import { useLocation, useParams } from 'react-router-dom';
 import callApi from '../utils/callApi';
+import categories from '../utils/categories';
 
 const MarketBlock = styled.div`
   width: 954px;
@@ -28,19 +29,14 @@ const MarketBlock = styled.div`
 
 function Market() {
   const { state } = useLocation();
-
-  const pagePer = 20;
-  const [prods, setProds] = useState([]);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(pagePer);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [categories, setCategories] = useState([{}]);
-
-  const [selectedCatId, setSelectedCatId] = useState();
+  const searchWord = state ? state.searchWord : '';
   const params = useParams();
+  const [prods, setProds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCatId, setSelectedCatId] = useState(params.cat_id);
 
   // 전체 게시물 개수
-  const totalProdsCnt = prods.length;
+  const totalPostCnt = prods.length;
 
   useEffect(() => {
     setSelectedCatId(params.cat_id);
@@ -48,25 +44,8 @@ function Market() {
   }, [selectedCatId, params]);
 
   useEffect(() => {
-    setStart((currentPage - 1) * pagePer);
-    setEnd(currentPage * pagePer);
-  }, [currentPage]);
-
-  const toggleCurrentPage = e => {
-    setCurrentPage(e);
-  };
-  useEffect(() => {
-    callApi('get', '/market/category', {}, setCategories);
-  }, []);
-
-  useEffect(() => {
-    if (state) {
-      callApi(
-        'get',
-        '/market/product',
-        { params: { state: state.query } },
-        setProds
-      );
+    if (searchWord) {
+      callApi('get', '/market/product', { params: { searchWord } }, setProds);
     } else {
       callApi(
         'get',
@@ -75,37 +54,34 @@ function Market() {
         setProds
       );
     }
-  }, [selectedCatId, state]);
+  }, [searchWord, selectedCatId]);
 
   return (
     <MarketBlock>
       <Category categories={categories} />
-      {state ? (
+      {searchWord ? (
         <div className='listTitle'>
-          <span className='value'>'{state.query}'</span>에 대한 검색결과 &nbsp;
-          <span className='count'>{prods.length}개</span>
+          <span className='value'>'{searchWord}'</span>에 대한 검색결과 &nbsp;
+          <span className='count'>{totalPostCnt}개</span>
         </div>
       ) : selectedCatId ? (
         <div className='listTitle'>
-          <span className='value'>
-            {categories[selectedCatId - 1].cat_name}
-          </span>
+          <span className='value'>{categories[selectedCatId - 1]}</span>
           &nbsp;&nbsp;
-          <span className='count'>{prods.length}개</span>
+          <span className='count'>{totalPostCnt}개</span>
         </div>
       ) : (
         <div className='listTitle'>
           <span className='value'>전체 상품</span>
           &nbsp;&nbsp;
-          <span className='count'>{prods.length}개</span>
+          <span className='count'>{totalPostCnt}개</span>
         </div>
       )}
-      <ProductList prods={prods.slice(start, end)} />
+      <ProductList prods={prods} currentPage={currentPage} />
       <Pagination
-        pagePer={pagePer}
-        totalPostCnt={totalProdsCnt}
+        totalPostCnt={totalPostCnt}
         currentPage={currentPage}
-        toggleCurrentPage={e => toggleCurrentPage(e)}
+        setCurrentPage={setCurrentPage}
       />
     </MarketBlock>
   );

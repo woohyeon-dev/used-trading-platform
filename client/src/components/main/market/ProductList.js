@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import timeForToday from '../../../utils/timeForToday';
+import pagePer from '../../../utils/pagePer';
 
 const ProductListBlk = styled.div`
   height: auto;
@@ -70,11 +71,19 @@ const ProductBox = styled.div`
   }
 `;
 
-function ProductList({ prods }) {
+function ProductList({ prods, currentPage }) {
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(pagePer);
+
+  useEffect(() => {
+    setStart((currentPage - 1) * pagePer);
+    setEnd(currentPage * pagePer);
+  }, [currentPage]);
+
   return (
     <ProductListBlk>
       {prods.length > 0 &&
-        prods.map((prod, index) => (
+        prods.slice(start, end).map((prod, index) => (
           <ProductBox key={index}>
             <img alt='' src={prod.image} className='imageBox' />
             <div className='postInfo'>

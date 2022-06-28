@@ -6,9 +6,10 @@ const { upload } = require('../utils/upload');
 const router = express.Router();
 
 router.get('/product', async (req, res, next) => {
+  console.log(req.query);
   try {
     const catId = req.query.cat_id;
-    let searchWord = req.query.state;
+    let searchWord = req.query.searchWord;
     if (!searchWord) {
       searchWord = '';
     }
