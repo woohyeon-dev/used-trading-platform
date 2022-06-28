@@ -1,5 +1,5 @@
 // 카테고리
-module.exports = [
+const CATEGORIES = [
   '생활용품',
   '전자기기',
   '문구',
@@ -10,3 +10,4 @@ module.exports = [
   '스포츠용품',
   '기타',
 ];
+export default CATEGORIES;

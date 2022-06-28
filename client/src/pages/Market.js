@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Category, ProductList, Pagination } from '../components';
 import { useLocation, useParams } from 'react-router-dom';
 import callApi from '../utils/callApi';
-import categories from '../utils/categories';
+import CATEGORIES from '../utils/categories';
 
 const MarketBlock = styled.div`
   width: 954px;
@@ -58,7 +58,7 @@ function Market() {
 
   return (
     <MarketBlock>
-      <Category categories={categories} />
+      <Category CATEGORIES={CATEGORIES} />
       {searchWord ? (
         <div className='listTitle'>
           <span className='value'>'{searchWord}'</span>에 대한 검색결과 &nbsp;
@@ -66,7 +66,7 @@ function Market() {
         </div>
       ) : selectedCatId ? (
         <div className='listTitle'>
-          <span className='value'>{categories[selectedCatId - 1]}</span>
+          <span className='value'>{CATEGORIES[selectedCatId - 1]}</span>
           &nbsp;&nbsp;
           <span className='count'>{totalPostCnt}개</span>
         </div>

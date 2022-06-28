@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import pagePer from '../../utils/pagePer';
+import PAGE_PER from '../../utils/pagePer';
 
 const PaginationBlk = styled.div`
   width: 984px;
@@ -33,7 +33,7 @@ function Pagination({ totalPostCnt, currentPage, setCurrentPage }) {
   const pageGroupSize = 10;
 
   // 한 페이지에 10개의 게시물씩 전체 페이지 개수
-  let totalPageCnt = Math.ceil(totalPostCnt / pagePer);
+  let totalPageCnt = Math.ceil(totalPostCnt / PAGE_PER);
 
   // pages에 모든 페이지를 저장
   let pages = [];

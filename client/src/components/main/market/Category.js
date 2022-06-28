@@ -28,13 +28,13 @@ const CategoryBlock = styled.div`
   }
 `;
 
-function Category({ categories }) {
+function Category({ CATEGORIES }) {
   return (
     <CategoryBlock>
       <NavLink to='/market' key={0} className='categoryBtn'>
         {'전체보기'}
       </NavLink>
-      {categories.map((category, index) => (
+      {CATEGORIES.map((category, index) => (
         <NavLink
           to={`/market/categories/${index + 1}`}
           key={index}

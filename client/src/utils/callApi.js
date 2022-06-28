@@ -11,10 +11,10 @@ const callApi = async (requestType, router, data, setData) => {
       data,
       { withCredentials: true }
     );
-    if (requestType === 'get') {
-      setData(res?.data);
-    } else {
-      alert(res?.data);
+    if (requestType === 'get' && res.data) {
+      setData(res.data);
+    } else if (requestType !== 'get' && res.data) {
+      alert(res.data);
     }
   } catch (err) {
     alert(err.response.data);

@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import defaultImage from '../image/default.png';
 import callApi from '../utils/callApi';
-import categories from '../utils/categories';
+import CATEGORIES from '../utils/categories';
 
 const CreateProductBlock = styled.div`
   width: 984px;
@@ -278,7 +278,7 @@ function CreateProduct() {
         <div className='inputBox'>
           <div className='inputTitle'>카테고리</div>
           <select name='cat_id' onChange={handleInputs}>
-            {categories.map((category, index) => (
+            {CATEGORIES.map((category, index) => (
               <option value={index + 1} key={index}>
                 {category}
               </option>
