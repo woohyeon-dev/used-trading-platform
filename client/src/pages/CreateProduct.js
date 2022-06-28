@@ -6,91 +6,94 @@ import callApi from '../utils/callApi';
 import CATEGORIES from '../utils/categories';
 
 const CreateProductBlock = styled.div`
-  width: 984px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  padding: 50px 0 60px 0;
-  background-color: #f3f3f3;
-
-  form {
-    margin: 0 auto;
-  }
+  width: 1024px;
+  padding: 30px 30px 70px 30px;
+  font-size: 20px;
 
   .pageTitle {
-    font-size: 33px;
+    font-size: 30px;
+    line-height: 100px;
     font-weight: bold;
     text-align: center;
-    padding-bottom: 30px;
     border-bottom: 2px solid black;
   }
 
   .inputBox {
-    width: 924px;
     display: flex;
-    margin-top: 30px;
+    margin-top: 40px;
+    padding: 0 20px;
   }
 
   .inputTitle {
-    width: 170px;
-    padding-left: 20px;
     font-size: 22px;
+    width: 170px;
     line-height: 50px;
   }
 
   input {
-    width: 480px;
-    margin-right: 10px;
+    width: 704px;
     padding: 17px;
     font-size: 16px;
     font-family: 'GyeonggiBatang';
-    border: 1px solid black;
+    border: 1px solid lightgrey;
     border-radius: 3px;
 
+    &:hover,
     &:focus {
-      outline: none;
+      outline: 1px solid black;
     }
   }
 
   .titleCharCnt {
-    font-size: 20px;
+    width: 50px;
+    text-align: right;
     line-height: 51px;
     height: 50px;
-    font-weight: bold;
   }
 
   .bottomLine {
-    height: 30px;
+    height: 40px;
     border-bottom: 1px solid lightgrey;
   }
 
   .imageUpload {
-    width: 230px;
-    height: 230px;
-    border: 1px solid black;
+    width: 181px;
+    height: 180px;
+    border: 1px solid lightgrey;
     border-radius: 3px;
+
+    &:hover,
+    &:focus {
+      outline: 1px solid black;
+    }
   }
-  
+
   .imgPreview {
-    width: 230px;
-    height: 230px;
-    margin-left: 20px;
-    border: 1px solid black;
+    width: 181px;
+    height: 180px;
+    margin-left: 10px;
+    border: 1px solid lightgrey;
     border-radius: 3px;
   }
 
   select {
     font-family: 'GyeonggiBatang';
-    border: 1px solid black;
+    border: 1px solid lightgrey;
+    color: grey;
     border-radius: 3px;
     width: 150px;
     padding: 10px;
     font-size: 16px;
+
+    &:hover,
+    &:focus {
+      outline: 1px solid black;
+    }
   }
 
   .textareaBox {
     display: flex;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
   .priceInput {
@@ -98,32 +101,32 @@ const CreateProductBlock = styled.div`
   }
 
   .won {
+    width: 34px;
+    text-align: right;
     font-size: 20px;
     line-height: 50px;
-    font-weight: bold;
   }
 
   textarea {
     font-family: 'GyeonggiBatang';
     font-size: 16px;
-    width: 734px;
+    width: 754px;
     height: 250px;
     line-height: 30px;
     padding: 15px;
     resize: none;
-    border: 1px solid black;
+    border: 1px solid lightgrey;
     border-radius: 3px;
 
+    &:hover,
     &:focus {
-      outline: none;
+      outline: 1px solid black;
     }
   }
 
   .descriptCharCnt {
     text-align: right;
-    padding: 10px 27px; 10px 10px;
-    font-size: 20px;
-    font-weight: bold;
+    padding: 10px 22px 0 0;
   }
 
   .writePostBtnGroup {
@@ -301,7 +304,7 @@ function CreateProduct() {
         </div>
         <div className='bottomLine'></div>
 
-        <div className='textareaBox'>
+        <div className='inputBox'>
           <div className='inputTitle'>설명</div>
           <textarea
             name='descript'
