@@ -11,9 +11,9 @@ import ProductList from './main/market/ProductList';
 import Member from './main/group/Member';
 import MemberCreate from './main/group/MemberCreate';
 import MemberUpdateModal from './main/group/MemberUpdateModal';
-import ReplyCreate from './main/semester/ReplyCreate';
-import ReplyUpdate from './main/semester/ReplyUpdate';
-import ReplyList from './main/semester/ReplyList';
+import ReplyCreate from './semester/ReplyCreate';
+import ReplyUpdate from './semester/ReplyUpdate';
+import ReplyList from './semester/ReplyList';
 import NextPageInput from './register/NextPageInput';
 import PrevPageInput from './register/PrevPageInput';
 

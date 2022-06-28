@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import Context from '../../../context/Context';
-import callApi from '../../../utils/callApi';
-import timeForToday from '../../../utils/timeForToday';
-import { ReplyCreate, ReplyUpdate } from './../../index';
+import Context from '../../context/Context';
+import callApi from '../../utils/callApi';
+import timeForToday from '../../utils/timeForToday';
+import { ReplyCreate, ReplyUpdate } from '../index';
 
 const ReplyListBlock = styled.div`
   .total {

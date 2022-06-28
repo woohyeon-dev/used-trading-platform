@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Context from '../../../context/Context';
-import callApi from '../../../utils/callApi';
+import Context from '../../context/Context';
+import callApi from '../../utils/callApi';
 
 const ReplyCreateBlock = styled.div`
   textarea {

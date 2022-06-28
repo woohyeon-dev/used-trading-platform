@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import callApi from '../../../utils/callApi';
+import callApi from '../../utils/callApi';
 
 const ReplyUpdateBlock = styled.div`
   textarea {
