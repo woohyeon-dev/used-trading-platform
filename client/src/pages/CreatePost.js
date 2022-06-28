@@ -10,7 +10,7 @@ const CreatePostBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding: 50px 0 60px 0;
-  background-color: #f8f9fa;
+  background-color: #f3f3f3;
 
   form {
     margin: 0 auto;

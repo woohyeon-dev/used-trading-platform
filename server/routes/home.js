@@ -60,7 +60,7 @@ router.get('/home/product', async (req, res, next) => {
         descript: p.descript,
         price: p.price,
         regdate: p.regdate,
-        image: `http://localhost:5000/img/${p.image}`,
+        image: p.image,
         title: p.title,
         nickname: p.User.nickname,
         cat_id: p.cat_id,

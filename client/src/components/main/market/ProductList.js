@@ -85,7 +85,12 @@ function ProductList({ prods, currentPage }) {
       {prods.length > 0 &&
         prods.slice(start, end).map((prod, index) => (
           <ProductBox key={index}>
-            <img alt='' src={prod.image} className='imageBox' />
+            <img
+              alt=''
+              src={process.env.REACT_APP_IMAGE_URL + prod.image}
+              className='imageBox'
+              onContextMenu={e => e.preventDefault()}
+            />
             <div className='postInfo'>
               <div className='prodTitle'>
                 <NavLink

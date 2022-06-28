@@ -99,18 +99,25 @@ function Member({ members, setVisible, setSelectId }) {
     const { mb_id, image } = members[e.target.id];
     callApi('delete', '/group/delete', { params: { mb_id, image } });
   };
-
   return (
     <MemberBlock>
       {members.length > 0 &&
         members.map((member, index) => (
           <MemberBox key={index} member={member}>
             <div className='memberImgBox'>
-              <img alt='' src={member.image} className='memberImg' />
+              <img
+                alt=''
+                src={process.env.REACT_APP_IMAGE_URL + member.image}
+                className='memberImg'
+                onContextMenu={e => e.preventDefault()}
+              />
             </div>
             <div className='memberInfoBox'>
               <div className='memberName'>{member.name}</div>
-              <div className='memberInfo'>Mobile. {member.mb_tell}</div>
+              <div className='memberInfo'>
+                Mobile.{' '}
+                {member.mb_tell.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
+              </div>
               <div className='memberInfo'>{member.introduction}</div>
             </div>
             <div className='buttonBox'>

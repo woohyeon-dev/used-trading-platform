@@ -21,7 +21,7 @@ const groupRouter = require('./routes/group');
 const semesterRouter = require('./routes/semester');
 
 const app = express();
-app.set('port', process.env.PORT || 5000); // 포트 설정
+app.set('port', process.env.PORT); // 포트 설정
 
 app.use('/img', express.static('public'));
 
